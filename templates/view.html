@@ -13,6 +13,8 @@
 	{% if item.parent %}
 	<a href="/list{{ item.parent }}">>{{ item.parent }}</a>
 	<hr>
+	<h3>{{item.name}}</h3>
+	<p>{{item.classname}}</p>
 	{% endif %}
 	<form method="post">
 	  <input type="hidden" name="classname" value="{{item.classname}}">
