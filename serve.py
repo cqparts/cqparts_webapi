@@ -24,6 +24,7 @@ class thing(NodeMixin):
         self.built = False
         self.classname = None
         self.parent = parent
+        self.params = None
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -37,6 +38,7 @@ class thing(NodeMixin):
                 'leaf': self.is_leaf,
                 'built': self.built,
                 'classname' : self.classname,
+                'params' : self.params
             }
         return val 
 
@@ -44,7 +46,7 @@ class thing(NodeMixin):
         l = []
         if self.parent != None:
             up  = self.parent.info()
-            up['name'] = '..'
+            up['name'] = self.parent.get_path() 
             l.append(up)
         for i in self.children:
             l.append(i.info())
@@ -98,42 +100,52 @@ class directory():
                 except:
                     pass
             item = self.class_dict[key]
-            o = item.c(**fixes)
-            display(o)
+            item.params.update(fixes)
+            self.export(item)
 
     def export(self,t):
+        try:
+            os.removedirs('static/cache/'+t.name)
+        except:
+            pass
         try:
             os.makedirs('static/cache/'+t.name)
         except:
             pass
-        t.inst.exporter('gltf')('static/cache/'+t.name+'/out.gltf')
+        o = t.c(**t.params)
+        app.logger.error("%s",o)
+        o.exporter('gltf')('static/cache/'+t.name+'/out.gltf')
+        app.logger.error("export finished")
 
     def params(self,key):
         if self.exists(key) == False:
             abort(404)
         t = self.k[key]
+        d = {}
         if t.built == False:
-            t.inst = t.c() 
+            inst = t.c() 
+            pi = inst.params().items()
+            for i in pi:
+                # only grab the floats for now
+                if isinstance(i[1],float):
+                    d[i[0]] = i[1]
+                if isinstance(i[1],int):
+                    d[i[0]] = i[1]
+            t.params = d
             self.export(t)
             t.built = True
-        d = {}
-        pi = t.inst.params().items()
-        for i in pi:
-            # only grab the floats for now
-            if isinstance(i[1],float):
-                d[i] = i[1]
-            if isinstance(i[1],int):
-                d[i] = i[1]
         info = t.info()
-        info['params'] = d 
-        #if isinstance(t.inst,cqparts.Assembly): 
-        #    info['tree'] = t.inst.tree_str()
         return info 
 
 
 #d = directory(cqparts_bucket._namespace,'export')
 d = directory('cqparts','export')
 print(RenderTree(d.root))
+
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store'
+    return response
 
 @app.route('/')
 def base():

@@ -12,7 +12,7 @@
 	  <div>
 	<form method="post">
 	  <input type="hidden" name="classname" value="{{item.classname}}">
-	  {% for key, value in item.params %}
+	  {% for key, value in item.params.items() %}
 	    {{ key }} <input type="text" name="{{ key }}" value="{{ value}}"><br>
 	  {% endfor %}
 	    <input type="submit" value="Submit">
