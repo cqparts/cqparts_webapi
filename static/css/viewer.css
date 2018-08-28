@@ -5,7 +5,7 @@
     left: 5px;
 };
 
-#floater {
+floater {
     position: absolute;
-    display: block;
+    width: auto;
 };

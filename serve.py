@@ -24,7 +24,7 @@ class thing(NodeMixin):
         self.built = False
         self.classname = None
         self.parent = parent
-        self.params = None
+        self.params = {} 
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -60,6 +60,7 @@ class thing(NodeMixin):
 class directory():
     def __init__(self,base,name):
         d = cs.index[name]
+        self.name = name
         self.d = d
         self.res = Resolver('name')
         self.base = base
@@ -69,15 +70,14 @@ class directory():
         self.build()
 
     def build(self):
-        for i in cs.index.keys():
-            p = thing(i,parent=self.root)
-            for j in cs.index[i]:
-                b = thing(j,parent=p)
-                for k in cs.index[i][j]:
-                    cn = type(k()).__module__+'.'+k.__name__
-                    t = thing(k.__name__,parent=b,c=k,classname=cn)
-                    self.class_dict[cn] = t
-                    self.k[self.base+'/'+i+'/'+j+'/'+k.__name__] = t
+        p = thing(self.name,parent=self.root)
+        for j in self.d:
+            b = thing(j,parent=p)
+            for k in self.d[j]:
+                cn = type(k()).__module__+'.'+k.__name__
+                t = thing(k.__name__,parent=b,c=k,classname=cn)
+                self.class_dict[cn] = t
+                self.k[self.base+'/'+self.name+'/'+j+'/'+k.__name__] = t
 
     def children(self,path):
         r = self.res.get(self.root,path)
