@@ -25,6 +25,7 @@ class thing(NodeMixin):
         self.classname = None
         self.parent = parent
         self.params = {} 
+        self.doc = "NoDoc"
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -38,21 +39,23 @@ class thing(NodeMixin):
                 'leaf': self.is_leaf,
                 'built': self.built,
                 'classname' : self.classname,
-                'params' : self.params
+                'params' : self.params,
+                'doc' : self.doc,
             }
         if self.parent is not None:
             val['parent'] = self.parent.get_path()
         return val 
 
     def dir(self):
-        l = []
+        data = {}
         if self.parent != None:
-            up  = self.parent.info()
-            up['name'] = self.parent.get_path() 
-            l.append(up)
+            data['parent'] = self.parent.get_path() 
+        l = []
         for i in self.children:
             l.append(i.info())
-        return l
+        data['list'] = l 
+        data['path'] = self.get_path()
+        return data 
 
     def __repr__(self):
         return "<thing: "+self.get_path()+">"
@@ -75,7 +78,7 @@ class directory():
             b = thing(j,parent=p)
             for k in self.d[j]:
                 cn = type(k()).__module__+'.'+k.__name__
-                t = thing(k.__name__,parent=b,c=k,classname=cn)
+                t = thing(k.__name__,parent=b,c=k,classname=cn,doc=k.__doc__)
                 self.class_dict[cn] = t
                 self.k[self.base+'/'+self.name+'/'+j+'/'+k.__name__] = t
 
@@ -153,13 +156,9 @@ def add_header(response):
 def base():
     return render_template('list.html',items=d.root.dir())
 
-@app.route('/list')
-def list():
-    return jsonify(d.items())
-
 @app.route('/list/<path:modelname>')
 def subcat(modelname):
-    return render_template('list.html',items=d.prefix(modelname))
+    return render_template('list.html',dirs=d.prefix(modelname))
 
 @app.route('/show/<path:modelname>',methods=['GET','POST'])
 def show_model(modelname):

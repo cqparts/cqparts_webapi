@@ -1,8 +1,14 @@
 <!doctype html>
 <html>
    <body>
+	<div style="position: absolute">
      <ul>
-        {% for n in items%}
+	     <h3>{{ dirs.path }}</h3>
+	{% if dirs.parent %}
+		<a href="/list{{dirs.parent}}">{{dirs.parent}}</a>
+	{% endif %}
+	<hr>
+        {% for n in dirs.list%}
 	{% if n.leaf %}
 	<li>
 		<a href="/show{{n.path}}">{{n.name}}</a>
@@ -15,5 +21,6 @@
 	{% endif %}
         {% endfor %}
      </ul>
+	</div>
    </body>
 </html>

@@ -11,10 +11,11 @@
 	  <div id="viewer"></div>
 	  <div style="position: absolute">
 	{% if item.parent %}
-	<a href="/list{{ item.parent }}">>{{ item.parent }}</a>
+	<a href="/list{{ item.parent }}">{{ item.parent }}</a>
 	<hr>
 	<h3>{{item.name}}</h3>
 	<p>{{item.classname}}</p>
+	<p>{{item.doc}}</p>
 	{% endif %}
 	<form method="post">
 	  <input type="hidden" name="classname" value="{{item.classname}}">
