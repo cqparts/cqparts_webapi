@@ -40,6 +40,8 @@ class thing(NodeMixin):
                 'classname' : self.classname,
                 'params' : self.params
             }
+        if self.parent is not None:
+            val['parent'] = self.parent.get_path()
         return val 
 
     def dir(self):

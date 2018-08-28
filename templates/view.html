@@ -10,6 +10,10 @@
   <body style="margin:0; overflow:hidden;">
 	  <div id="viewer"></div>
 	  <div>
+	{% if item.parent %}
+	<a href="/list{{ item.parent }}">>{{ item.parent }}</a>
+	<hr>
+	{% endif %}
 	<form method="post">
 	  <input type="hidden" name="classname" value="{{item.classname}}">
 	  {% for key, value in item.params.items() %}
