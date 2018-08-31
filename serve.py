@@ -8,7 +8,7 @@ from cqparts_bucket import *
 import cqparts.search as cs
 from cqparts.display import display
 
-from flask import Flask, jsonify, abort , render_template, request
+from flask import Flask, jsonify, abort , render_template, request, session
 
 from anytree import Node , RenderTree , NodeMixin
 from anytree.search import findall
@@ -17,6 +17,8 @@ from anytree.resolver import Resolver
 from collections import OrderedDict
 
 import sqlite3
+import api
+import cache
 
 
 class thing(NodeMixin):
@@ -28,6 +30,7 @@ class thing(NodeMixin):
         self.parent = parent
         self.params = {} 
         self.doc = "NoDoc"
+        self.gltf_path = ""
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -43,6 +46,7 @@ class thing(NodeMixin):
                 'classname' : self.classname,
                 'params' : self.params,
                 'doc' : self.doc,
+                'gltf_path' : self.gltf_path,
             }
         if self.parent is not None:
             val['parent'] = self.parent.get_path()
@@ -122,8 +126,9 @@ class directory():
             pass
         o = t.c(**t.params)
         app.logger.error("%s",o)
-        o.exporter('gltf')('static/cache/'+t.name+'/out.gltf')
-        app.logger.error("export finished")
+        gltf_path = 'static/cache/'+t.name+'/out.gltf'
+        o.exporter('gltf')(gltf_path)
+        t.gltf_path = gltf_path
 
     def params(self,key):
         if self.exists(key) == False:
@@ -148,18 +153,23 @@ class directory():
 
 db = sqlite3.connect("meta.db")
 app = Flask(__name__)
-
+app.secret_key = "sort of but not actually that secret"
+app.register_blueprint(api.bp)
+app.register_blueprint(cache.cachebp)
 d = directory('cqparts','export',db)
-print(RenderTree(d.root))
+api.d = d 
+#print(RenderTree(d.root))
 
 # don't cache
 @app.after_request
 def add_header(response):
     response.headers['Cache-Control'] = 'no-store'
+#    app.logger.error(session)
     return response
 
 @app.route('/')
 def base():
+    session['bork'] = True
     return render_template('list.html',dirs=d.prefix(d.base))
 
 @app.route('/list/<path:modelname>')
@@ -178,5 +188,6 @@ def show_model(modelname):
 def rebuild():
     return jsonify(request.form.items())
 
+print(app.url_map)
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=8089)
