@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+#!/usr/bin/env python
 import sys, os
 # working inside the lib
 sys.path.append('..')
@@ -87,7 +87,7 @@ class directory():
 
     def children(self,path):
         r = self.res.get(self.root,path)
-        print r
+        print(r)
 
     def exists(self,key):
         if key in self.k:
@@ -160,7 +160,7 @@ def add_header(response):
 
 @app.route('/')
 def base():
-    return render_template('list.html',items=d.prefix(d.base))
+    return render_template('list.html',dirs=d.prefix(d.base))
 
 @app.route('/list/<path:modelname>')
 def subcat(modelname):
