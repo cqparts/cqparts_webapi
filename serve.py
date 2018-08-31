@@ -15,7 +15,9 @@ from anytree.search import findall
 from anytree.resolver import Resolver
 
 from collections import OrderedDict
-app = Flask(__name__)
+
+import sqlite3
+
 
 class thing(NodeMixin):
     def __init__(self,name,parent=None,**kwargs):
@@ -61,8 +63,9 @@ class thing(NodeMixin):
         return "<thing: "+self.get_path()+">"
 
 class directory():
-    def __init__(self,base,name):
+    def __init__(self,base,name,database):
         d = cs.index[name]
+        self.database = database
         self.name = name
         self.d = d
         self.res = Resolver('name')
@@ -143,10 +146,13 @@ class directory():
         return info 
 
 
-#d = directory(cqparts_bucket._namespace,'export')
-d = directory('cqparts','export')
+db = sqlite3.connect("meta.db")
+app = Flask(__name__)
+
+d = directory('cqparts','export',db)
 print(RenderTree(d.root))
 
+# don't cache
 @app.after_request
 def add_header(response):
     response.headers['Cache-Control'] = 'no-store'
@@ -154,7 +160,7 @@ def add_header(response):
 
 @app.route('/')
 def base():
-    return render_template('list.html',items=d.root.dir())
+    return render_template('list.html',items=d.prefix(d.base))
 
 @app.route('/list/<path:modelname>')
 def subcat(modelname):

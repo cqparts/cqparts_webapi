@@ -22,6 +22,11 @@
 	  {% for key, value in item.params.items() %}
 	    {{ key }} <input type="text" name="{{ key }}" value="{{ value}}"><br>
 	  {% endfor %}
+	  <hr>
+	  Save
+	  <input type="checkbox" name="save">
+	  <input type="text">
+	  <hr>
 	    <input type="submit" value="Submit">
 	</form>
 	  </div>
