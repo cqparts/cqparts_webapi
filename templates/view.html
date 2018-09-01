@@ -33,6 +33,8 @@
     <script src="/static/js/cqpartsViewer.js"></script>
     <script>
       load('/static/cache/{{item.name}}/out.gltf');
+      camera.position.set({{item.view.camera_pos}});
+      controls.target.set({{item.view.camera_target}});
     </script>
   </body>
 </html>

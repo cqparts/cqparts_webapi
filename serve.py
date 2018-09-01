@@ -19,6 +19,7 @@ from collections import OrderedDict
 import sqlite3
 import api
 import cache
+import views
 
 
 class thing(NodeMixin):
@@ -31,6 +32,7 @@ class thing(NodeMixin):
         self.params = {} 
         self.doc = "NoDoc"
         self.gltf_path = ""
+        self.view = [[1,1,1],[0,0,0]]
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -46,6 +48,7 @@ class thing(NodeMixin):
                 'classname' : self.classname,
                 'params' : self.params,
                 'doc' : self.doc,
+                'view' : self.view,
                 'gltf_path' : self.gltf_path,
             }
         if self.parent is not None:
@@ -64,26 +67,34 @@ class thing(NodeMixin):
         return data 
 
     def __repr__(self):
-        return "<thing: "+self.get_path()+">"
+        return "<thing: "+self.get_path()+","+str(self.classname)+">"
 
 class directory():
     def __init__(self,base,name,database):
-        d = cs.index[name]
         self.database = database
         self.name = name
-        self.d = d
+        self.d = cs.index.copy()
         self.res = Resolver('name')
         self.base = base
         self.class_dict = {}
         self.k = {}
         self.root = thing(base)
-        self.build()
+        self.build_tree(name,self.root)
+        self.build_other()
 
-    def build(self):
-        p = thing(self.name,parent=self.root)
-        for j in self.d:
+    def build_other(self):
+        p = thing('lib',parent=self.root)
+        k = self.d.keys()
+        print k
+        for i in k:
+            self.build_tree(i,p)
+
+    def build_tree(self,name,root):
+        p = thing(name,parent=root)
+        tr = self.d.pop(name)
+        for j in tr:
             b = thing(j,parent=p)
-            for k in self.d[j]:
+            for k in tr[j]:
                 cn = type(k()).__module__+'.'+k.__name__
                 t = thing(k.__name__,parent=b,c=k,classname=cn,doc=k.__doc__)
                 self.class_dict[cn] = t
@@ -125,9 +136,13 @@ class directory():
         except:
             pass
         o = t.c(**t.params)
-        app.logger.error("%s",o)
         gltf_path = 'static/cache/'+t.name+'/out.gltf'
-        o.exporter('gltf')(gltf_path)
+        r =  o.exporter('gltf')
+        v = r(gltf_path)
+        view = [r.scene_min,r.scene_max]
+        t.view = views.placed(view)
+        app.logger.error("%s %s",view,views.placed(view))
+
         t.gltf_path = gltf_path
 
     def params(self,key):
@@ -158,7 +173,7 @@ app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
 d = directory('cqparts','export',db)
 api.d = d 
-#print(RenderTree(d.root))
+print(RenderTree(d.root))
 
 # don't cache
 @app.after_request
