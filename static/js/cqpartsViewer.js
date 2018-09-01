@@ -69,6 +69,8 @@ function init() {
     var baseGrid = new THREE.GridHelper(1, 10);
     //baseGrid.geometry.rotateX( Math.PI / 2 );
     scene.add(baseGrid);
+    var baseGridSmall = new THREE.GridHelper(0.1, 10);
+    scene.add(baseGridSmall);
     container.appendChild(renderer.domElement);
 }
 
