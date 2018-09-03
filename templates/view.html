@@ -17,20 +17,22 @@
 	<p>{{item.classname}}</p>
 	<p>{{item.doc}}</p>
 	{% endif %}
-	<form method="post">
-	  <input type="hidden" name="classname" value="{{item.classname}}">
+	<form id="paramform" method="post"> </form>
+	  <input form="paramform" type="hidden" name="classname" value="{{item.classname}}">
+	  <table>
 	  {% for key, value in item.params.items() %}
-	    {{ key }} <input type="text" name="{{ key }}" value="{{ value}}"><br>
+	  <tr>
+		  <td>{{ key }} </td><td> <input form="paramform" type="text" name="{{ key }}" value="{{ value}}"></td>
+	  </tr>
 	  {% endfor %}
+	  </table>
 	  <hr>
 	  Save
-	  <input type="checkbox" name="save">
-	  <input type="text">
+	  <input form="paramform" type="checkbox" name="save">
+	  <input form="paramform" type="text">
 	  <hr>
-	    <input type="submit" value="Submit">
-	</form>
+	    <input form="paramform" type="submit" value="Submit">
 	  </div>
-	  {{ item }} 
     <script src="/static/js/cqpartsViewer.js"></script>
     <script>
       load('/static/cache/{{item.name}}/out.gltf');

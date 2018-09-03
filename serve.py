@@ -70,7 +70,7 @@ class thing(NodeMixin):
         return "<thing: "+self.get_path()+","+str(self.classname)+">"
 
 class directory():
-    def __init__(self,base,name,database):
+    def __init__(self,base,name,database,export="static/cache"):
         self.database = database
         self.name = name
         self.d = cs.index.copy()
@@ -78,6 +78,7 @@ class directory():
         self.base = base
         self.class_dict = {}
         self.k = {}
+        self.export_part = export
         self.root = thing(base)
         self.build_tree(name,self.root)
         self.build_other()
@@ -102,7 +103,7 @@ class directory():
 
     def children(self,path):
         r = self.res.get(self.root,path)
-        print(r)
+        return r
 
     def exists(self,key):
         if key in self.k:

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+   <head>
+    <link rel="stylesheet" href="/static/css/viewer.css">
+   </head>
+  <body style="margin:0; overflow:hidden;">
+	<div style="position: absolute">
+     <ul>
+	     <h3>{{ dirs.path }}</h3>
+	{% if dirs.parent %}
+		<a href="/list{{dirs.parent}}">{{dirs.parent}}</a>
+	{% endif %}
+	<hr>
+        {% for n in dirs.list%}
+	{% if n.leaf %}
+	<li>
+		<a href="/show{{n.path}}">{{n.name}}</a>
+		{% if n.built  == true %}[x]{% endif %}
+	</li>
+	{% else %}
+	<li>
+		<a href="/list{{n.path}}">{{n.name}}</a>
+	</li>
+	{% endif %}
+        {% endfor %}
+     </ul>
+	</div>
+   </body>
+</html>
