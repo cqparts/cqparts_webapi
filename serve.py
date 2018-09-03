@@ -20,6 +20,7 @@ import sqlite3
 import api
 import cache
 import views
+import render
 
 
 class thing(NodeMixin):
@@ -136,6 +137,7 @@ class directory():
             os.makedirs('static/cache/'+t.name)
         except:
             pass
+        render.event.append(t.name)
         o = t.c(**t.params)
         gltf_path = 'static/cache/'+t.name+'/out.gltf'
         r =  o.exporter('gltf')
@@ -172,6 +174,7 @@ app = Flask(__name__)
 app.secret_key = "sort of but not actually that secret"
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
+app.register_blueprint(render.renderbp)
 d = directory('cqparts','export',db)
 api.d = d 
 print(RenderTree(d.root))
@@ -206,4 +209,4 @@ def rebuild():
 
 print(app.url_map)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8089)
+    app.run(threaded=True,host='0.0.0.0',port=8089)
