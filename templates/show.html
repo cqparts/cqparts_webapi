@@ -1,13 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-   <body>
-<form action="/rebuild" method="post">
-  <input type="hidden" name="classname" value="{{item.classname}}">
-  {% for key, value in item.params %}
-    {{ key }} <input type="text" name="{{ key }}" value="{{ value}}"><br>
-  {% endfor %}
-    <input type="submit" value="Submit">
-</form>
-<hr>
-{{ item }}
+  <head>
+	  <title>{{item.classname}}</title>
+    <link rel="stylesheet" href="/static/css/viewer.css">
+    <script src="/static/js/three.min.js"></script>
+    <script src="/static/js/OrbitControls.js"></script>
+    <script src="/static/js/GLTFLoader.js"></script>
+  </head>
+  <body style="margin:0; overflow:hidden;">
+	  <div id="viewer"></div>
+	  <div style="position: absolute">
+	<h3>{{item.name}}</h3>
+	<p>{{item.classname}}</p>
+	{% if item.doc%}
+	<p>{{item.doc}}</p>
+	{% endif %}
+	  <table>
+	  {% for key, value in item.params.items() %}
+	  <tr>
+		  <td>{{ key }} </td><td>{{value}}</td>
+	  </tr>
+	  {% endfor %}
+	  </table>
+	  <hr>
+	  <a href="{{item.github}}">{{item.name}} on github</a>
+	  </div>
+    <script src="/static/js/cqpartsViewer.js"></script>
+    <script>
+      load('{{item.gltf_path}}');
+      camera.position.set({{item.view.camera_pos}});
+      controls.target.set({{item.view.camera_target}});
+    </script>
+  </body>
 </html>

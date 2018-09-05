@@ -11,7 +11,7 @@ from cqparts.display import display
 
 import json
 
-from anytree import Node, RenderTree, NodeMixin
+from anytree import Node, RenderTree, NodeMixin, PreOrderIter
 from anytree.search import findall
 from anytree.resolver import Resolver
 
@@ -79,15 +79,15 @@ class thing(NodeMixin):
 
 
 class Directory:
-    def __init__(self, base, name, database, export="static/cache"):
-        self.database = database
+    def __init__(self, base, name, prefix="static", export="cache"):
         self.name = name
         self.d = cs.index.copy()
         self.res = Resolver("name")
         self.base = base
         self.class_dict = {}
         self.k = {}
-        self.export_part = export
+        self.export_path = export
+        self.export_prefix = prefix
         self.root = thing(base)
         self.build_tree(name, self.root)
         self.build_other()
@@ -110,7 +110,7 @@ class Directory:
                 self.class_dict[cn] = t
                 self.k[self.base + "/" + self.name + "/" + j + "/" + k.__name__] = t
 
-    def children(self, path):
+    def get_path(self, path):
         r = self.res.get(self.root, path)
         return r
 
@@ -137,26 +137,28 @@ class Directory:
             self.export(item)
 
     def export(self, t):
+        folder_name = self.export_prefix + "/" + self.export_path + "/" + t.name
         try:
-            os.removedirs("static/cache/" + t.name)
+            os.removedirs(folder_name)
         except:
             pass
         try:
-            os.makedirs("static/cache/" + t.name)
+            os.makedirs(folder_name)
         except:
             pass
         o = t.c(**t.params)
-        gltf_path = "static/cache/" + t.name + "/out.gltf"
+        gltf_path = folder_name + "/out.gltf"
         r = o.exporter("gltf")
         v = r(gltf_path)
         view = [r.scene_min, r.scene_max]
         t.view = views.placed(view)
-        t.gltf_path = gltf_path
+        t.gltf_path = "/" + self.export_path + "/" + t.name + "/out.gltf"
         t.render(render.event)
 
     def params(self, key):
         if self.exists(key) == False:
-            abort(404)
+            print(str(key) + "keyfail") 
+            print(self.k.keys())
         t = self.k[key]
         d = {}
         if t.built == False:
@@ -173,3 +175,10 @@ class Directory:
             t.built = True
         info = t.info()
         return info
+
+    def treeiter(self, key):
+        nodes = []
+        item = self.get_path(key)
+        for node in PreOrderIter(item):
+            nodes.append(node)
+        return nodes

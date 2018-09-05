@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+   <head>
+	   <title>cqparts bucket export</title
+    <link rel="stylesheet" href="/static/css/viewer.css">
+   </head>
+  <body style="margin:0; overflow:hidden;">
+	<div style="position: absolute">
+     <ul>
+        {% for n in list%}
+	<li>
+		<a href="/{{n.page}}">{{n.name}}</a>
+	</li>
+        {% endfor %}
+     </ul>
+	</div>
+   </body>
+</html>

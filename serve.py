@@ -7,20 +7,18 @@ import json
 
 from flask import Flask, jsonify, abort, render_template, request, session
 
-import sqlite3
 import api
 import cache
 import views
 import render
 import directory
 
-db = sqlite3.connect("meta.db")
 app = Flask(__name__)
 app.secret_key = "sort of but not actually that secret"
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
 app.register_blueprint(render.renderbp)
-d = directory.Directory("cqparts", "export", db)
+d = directory.Directory("cqparts", "export")
 api.d = d
 
 # don't cache
