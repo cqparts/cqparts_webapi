@@ -29,10 +29,10 @@ l = d.treeiter("/cqparts/export")
 file_list = []
 for i in l:
     if i.is_leaf:
-        print i.info()
-        d.params(i.info()['path'][1:])
+        print(i.info())
+        d.params(i.info()["path"][1:])
         info = i.info()
-        info['github'] = github + i.classname.split('.')[1]+'.py'
+        info["github"] = github + i.classname.split(".")[1] + ".py"
         page = make_view(info)
         f = open(prefix + "/" + i.name + ".html", "w")
         f.write(page)

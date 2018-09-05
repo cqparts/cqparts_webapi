@@ -157,7 +157,7 @@ class Directory:
 
     def params(self, key):
         if self.exists(key) == False:
-            print(str(key) + "keyfail") 
+            print(str(key) + "keyfail")
             print(self.k.keys())
         t = self.k[key]
         d = {}
