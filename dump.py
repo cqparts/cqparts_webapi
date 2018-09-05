@@ -34,7 +34,7 @@ for i in l:
         d.params(i.info()["path"][1:])
         info = i.info()
         # print(i.name,i.get_path())
-        os.makedirs(prefix + "/" + i.get_path())
+        # os.makedirs(prefix + "/" + i.get_path())
         line_number = inspect.getsourcelines(i.c)[1]
         info["github"] = github + i.classname.split(".")[1] + ".py#L" + str(line_number)
         page = make_view(info)
