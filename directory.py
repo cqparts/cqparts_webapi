@@ -17,12 +17,14 @@ from anytree.resolver import Resolver
 
 import views
 import render
+import db
 
 
 class thing(NodeMixin):
     def __init__(self, name, parent=None, **kwargs):
         super(thing, self).__init__()
         self.name = name
+        self.loaded = False  # gret from sql or create
         self.built = False
         self.classname = None
         self.parent = parent
@@ -58,21 +60,20 @@ class thing(NodeMixin):
             "doc": self.doc,
             "view": self.view,
             "gltf_path": self.gltf_path,
+            "loaded": self.loaded,
         }
         if self.parent is not None:
             val["parent"] = self.parent.get_path()
         return val
 
     def dir(self):
-        data = {}
-        if self.parent != None:
-            data["parent"] = self.parent.get_path()
-        l = []
-        for i in self.children:
-            l.append(i.info())
-        data["list"] = l
-        data["path"] = self.get_path()
-        return data
+        val = {
+            "path": self.get_path(),
+            "leaf": self.is_leaf,
+            "built": self.built,
+            "name": self.name,
+        }
+        return val
 
     def __repr__(self):
         return "<thing: " + self.get_path() + "," + str(self.classname) + ">"
@@ -92,10 +93,11 @@ class Directory:
         self.build_tree(name, self.root)
         self.build_other()
 
+        self.store = db.Store()
+
     def build_other(self):
         p = thing("lib", parent=self.root)
         k = self.d.keys()
-        print(k)
         for i in k:
             self.build_tree(i, p)
 
@@ -121,7 +123,17 @@ class Directory:
 
     def prefix(self, key):
         v = self.res.get(self.root, "/" + key)
-        return v.dir()
+        data = {}
+        if v.parent != None:
+            data["parent"] = v.parent.get_path()
+        l = []
+        for i in v.children:
+            if i.loaded == False:
+                self.store.fetch(i)
+            l.append(i.dir())
+        data["list"] = l
+        data["path"] = v.get_path()
+        return data
 
     def build_part(self, params):
         key = params.pop("classname", None)
@@ -153,7 +165,13 @@ class Directory:
         view = [r.scene_min, r.scene_max]
         t.view = views.placed(view)
         t.gltf_path = "/" + self.export_path + "/" + t.name + "/out.gltf"
-        t.render(render.event)
+        # t.render(render.event)
+
+    def fetch(self, t):
+        self.store.fetch(t)
+        # due to multiple export paths (for dumping)
+        # this is set by itself
+        t.gltf_path = "/" + self.export_path + "/" + t.name + "/out.gltf"
 
     def params(self, key):
         if self.exists(key) == False:
@@ -161,6 +179,8 @@ class Directory:
             print(self.k.keys())
         t = self.k[key]
         d = {}
+        if t.loaded == False:
+            self.fetch(t)
         if t.built == False:
             inst = t.c()
             pi = inst.params().items()
@@ -173,6 +193,7 @@ class Directory:
             t.params = d
             self.export(t)
             t.built = True
+            self.store.upsert(t)
         info = t.info()
         return info
 
@@ -180,5 +201,7 @@ class Directory:
         nodes = []
         item = self.get_path(key)
         for node in PreOrderIter(item):
+            if node.loaded == False:
+                self.fetch(node)
             nodes.append(node)
         return nodes

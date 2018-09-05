@@ -4,6 +4,8 @@
 from flask import Flask, jsonify, abort, render_template, request, session
 
 import directory
+import inspect
+import os
 
 prefix = "dump"
 github = "http://github.com/zignig/cqparts_bucket/blob/master/"
@@ -29,10 +31,12 @@ l = d.treeiter("/cqparts/export")
 file_list = []
 for i in l:
     if i.is_leaf:
-        print(i.info())
         d.params(i.info()["path"][1:])
         info = i.info()
-        info["github"] = github + i.classname.split(".")[1] + ".py"
+        # print(i.name,i.get_path())
+        os.makedirs(prefix + "/" + i.get_path())
+        line_number = inspect.getsourcelines(i.c)[1]
+        info["github"] = github + i.classname.split(".")[1] + ".py#L" + str(line_number)
         page = make_view(info)
         f = open(prefix + "/" + i.name + ".html", "w")
         f.write(page)
