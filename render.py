@@ -1,17 +1,32 @@
 from flask import Blueprint, Response
 
-renderbp = Blueprint('render',__name__)
+renderbp = Blueprint("render", __name__)
 
-import time 
+import json, time
 
-event = ['one','two','three']
+event = []
 
-@renderbp.route('/render')
+
+@renderbp.route("/render")
 def render():
     def eventStream():
         while True:
             # wait for source data to be available, then push it
             if len(event) > 0:
-                yield 'data: {}\n\n'.format(event.pop())
+                yield event.pop(0)
+            else:
+                time.sleep(1)
+
     return Response(eventStream(), mimetype="text/event-stream")
 
+
+# get posted image
+@renderbp.route("/image", methods=["POST"])
+def image():
+    pass
+
+
+# get zipped gltf
+@renderbp.route("/zipped/<modelname>")
+def zipped(modelname):
+    return
