@@ -10,10 +10,10 @@
 	</head>
 	<body style="margin:0; overflow:hidden;">
 		<div id="viewer"></div>
-		<button id="show" class="button is-small" onclick="showHide()">Show</button>
-		<div id="info" class="box" style="position: absolute">
-			<button id="hide" class="button is-small" onclick="showHide()">Hide</button>
-			<h4 class="title is-6">{{item.name}}</h4>
+		<button id="show" class="button " onclick="showHide()">Show</button>
+		<div id="info" class="box panel" style="position: absolute">
+			<button id="hide" class="button" onclick="showHide()">Hide</button>
+			<h1 class="title is-4">{{item.name}}</h1>
 			{% if item.parent %}
 			<a href="/list{{ item.parent }}">{{ item.parent }}</a>
 			{% endif %}
@@ -41,6 +41,7 @@
 			Save
 			<input form="paramform" type="checkbox" name="save">
 			<input form="paramform" type="text">
+			<input class="button is-small" form="paramform" type="submit" value="Submit">
 			<br>
 			<span class="tag">{{item.classname}}</span>
 		</div>

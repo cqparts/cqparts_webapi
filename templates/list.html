@@ -17,8 +17,8 @@
 	<hr>
 	<div class="container">
 	<h2 class="title">{{dirs.name}}</h2>
-	{% for cols in dirs.list|batch(4) %}
-	<div class="columns">
+	{% for cols in dirs.list|sort|batch(4) %}
+	<div class="columns ">
 		{% for n in cols %}
 		<div class="column is-one-quarter">
 			{% if n.leaf %}
@@ -36,8 +36,8 @@
 				</a>
 			{% else %}
 				<a class="" href="/list{{n.path}}">
-					<div class="box">
-						<h2>{{n.name}}</h2>
+					<div class="box content">
+						<h2 class="title is-5">{{n.name}}</h2>
 					</div>
 				</a>
 			{% endif %}

@@ -13,7 +13,7 @@ import json
 import zipfile
 
 from anytree import Node, RenderTree, NodeMixin, PreOrderIter
-from anytree.search import findall, find_by_attr
+from anytree.search import findall, find_by_attr, findall_by_attr
 from anytree.resolver import Resolver
 
 import views
@@ -115,15 +115,15 @@ class Directory:
                 cn = type(k()).__module__ + "." + k.__name__
                 t = thing(k.__name__, parent=b, c=k, classname=cn, doc=k.__doc__)
                 self.class_dict[cn] = t
-                self.k[self.base + "/" + self.name + "/" + j + "/" + k.__name__] = t
+                self.k[p.get_path()+ "/" + j + "/" + k.__name__] = t
 
     def get_path(self, path):
         r = self.res.get(self.root, path)
         return r
 
     def get_name(self, name):
-        n = find_by_attr(self.root, name)
-        return n
+        n = findall_by_attr(self.root, name)
+        return n[0]
 
     def exists(self, key):
         if key in self.k:
@@ -203,7 +203,7 @@ class Directory:
         if self.exists(key) == False:
             print(str(key) + "keyfail")
             print(self.k.keys())
-        t = self.k[key]
+        t = self.k["/"+key]
         d = {}
         if t.loaded == False:
             self.fetch(t)
