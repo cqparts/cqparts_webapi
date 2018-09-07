@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 " dump the entire directory to a folder"
 
 # don't run the application but use the templates

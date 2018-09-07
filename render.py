@@ -1,10 +1,14 @@
-from flask import Blueprint, Response
+from flask import Blueprint, Response, abort, send_file, request
+import os
 
 renderbp = Blueprint("render", __name__)
+
 
 import json, time
 
 event = []
+# the directory
+d = None
 
 
 @renderbp.route("/render")
@@ -23,10 +27,29 @@ def render():
 # get posted image
 @renderbp.route("/image", methods=["POST"])
 def image():
-    pass
+    data = None
+    try:
+        data = request.files["objs"]
+    except:
+        abort(403)
+        return
+    export_path = d.export_prefix + os.sep + d.export_path + os.sep + "img" + os.sep
+    data.save(export_path + data.filename)
+    d.set_image(data.filename)
+    return "OK"
 
 
 # get zipped gltf
 @renderbp.route("/zipped/<modelname>")
 def zipped(modelname):
-    return
+    v = d.get_name(modelname)
+    if v is None:
+        abort(404)
+        return
+    file_name = d.get_zipped(v)
+    return send_file(
+        file_name,
+        mimetype="application/zip",
+        as_attachment=True,
+        attachment_filename=v.name + ".zip",
+    )

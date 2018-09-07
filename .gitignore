@@ -2,6 +2,7 @@
 *.db
 dump/
 static/cache
+static/zip
 __pycache__/
 *.py[cod]
 *$py.class

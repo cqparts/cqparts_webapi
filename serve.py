@@ -20,6 +20,7 @@ app.register_blueprint(cache.cachebp)
 app.register_blueprint(render.renderbp)
 d = directory.Directory("cqparts", "export")
 api.d = d
+render.d = d
 
 # don't cache
 @app.after_request
@@ -57,4 +58,4 @@ def rebuild():
 
 print(app.url_map)
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8089)
+    app.run(threaded=True, host="0.0.0.0", port=8089)

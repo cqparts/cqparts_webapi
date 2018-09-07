@@ -2,36 +2,44 @@
 <html>
   <head>
     <title>CQParts display-o-tron</title>
-    <link rel="stylesheet" href="/static/css/viewer.css">
+    <link rel="stylesheet" href="/static/css/bulma.css">
     <script src="/static/js/three.min.js"></script>
     <script src="/static/js/OrbitControls.js"></script>
     <script src="/static/js/GLTFLoader.js"></script>
   </head>
   <body style="margin:0; overflow:hidden;">
 	  <div id="viewer"></div>
-	  <div style="position: absolute">
+	  <div class="box" style="position: absolute">
+	<h4 class="title is-6">{{item.name}}</h4>
 	{% if item.parent %}
 	<a href="/list{{ item.parent }}">{{ item.parent }}</a>
-	<hr>
-	<h3>{{item.name}}</h3>
-	<p>{{item.classname}}</p>
-	<p>{{item.doc}}</p>
 	{% endif %}
+	{% if item.doc%}
+	<div class="message is-small">{{item.doc}}</div>
+	{% endif %}
+	<hr>
 	<form id="paramform" method="post"> </form>
 	  <input form="paramform" type="hidden" name="classname" value="{{item.classname}}">
-	  <table>
+	  <table class="table is-narrow is-hoverable">
+	  <thead>
+		  <tr>
+			  <th>Param</th>
+			  <th>Value</th>
+		  </tr>
+	  </thead>
 	  {% for key, value in item.params.items() %}
 	  <tr>
 		  <td>{{ key }} </td><td> <input form="paramform" type="text" name="{{ key }}" value="{{ value}}"></td>
 	  </tr>
 	  {% endfor %}
 	  </table>
-	  <hr>
+	  <br>
+	    <input class="button" form="paramform" type="submit" value="Submit">
 	  Save
 	  <input form="paramform" type="checkbox" name="save">
 	  <input form="paramform" type="text">
-	  <hr>
-	    <input form="paramform" type="submit" value="Submit">
+	    <hr>
+		<span class="tag">{{item.classname}}</span>
 	  </div>
     <script src="/static/js/cqpartsViewer.js"></script>
     <script>

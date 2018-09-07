@@ -1,10 +1,9 @@
+#!/usr/bin/env python
 " scanning all objects "
 
 import directory
 import inspect
 import db
-
-s = db.Store()
 
 d = directory.Directory("cqparts", "export")
 
@@ -12,10 +11,12 @@ l = d.treeiter("/cqparts/export")
 
 for i in l:
     # s.upsert(i)
+    print(i)
+    d.store.upsert(i)
     if i.is_leaf:
         name = i.name
         file_name = inspect.getsourcefile(i.c)
         line_number = inspect.getsourcelines(i.c)[1]
         # print(name, file_name, line_number)
-
-s.list()
+        i.image_path = "/static/cache/img/" + i.name + ".png"
+        d.store.upsert(i)

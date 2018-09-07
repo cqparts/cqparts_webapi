@@ -18,9 +18,11 @@ def placed(scene_size, fudge=2.5, fov=30.0, rescale=1000.0):
     cam_p[2] = cam_p[2] + cam_t[2]
     # write
     data = {}
-    xzy = lambda a: (a[0], a[2], -a[1])  # x,z,y coordinates (not x,y,z)
+    xzy = lambda a: (a[0], a[2], a[1])  # x,z,y coordinates (not x,y,z)
     data["camera_target"] = ",".join("%g" % (val) for val in xzy(cam_t))
     data["camera_pos"] = ",".join("%g" % (val) for val in xzy(cam_p))
+    # weird threejs cooreds
+    # cam_p[1] = -cam_p[1]
     data["cam"] = xyz(cam_p)
     data["target"] = xyz(cam_t)
     data["distance"] = distance

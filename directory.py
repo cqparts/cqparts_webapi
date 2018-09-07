@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import sys, os
 
-# working inside the lib
 sys.path.append("..")
+
 import cqparts_bucket
 import cqparts
 from cqparts_bucket import *
@@ -10,9 +10,10 @@ import cqparts.search as cs
 from cqparts.display import display
 
 import json
+import zipfile
 
 from anytree import Node, RenderTree, NodeMixin, PreOrderIter
-from anytree.search import findall
+from anytree.search import findall, find_by_attr
 from anytree.resolver import Resolver
 
 import views
@@ -26,12 +27,14 @@ class thing(NodeMixin):
         self.name = name
         self.loaded = False  # gret from sql or create
         self.built = False
+        self.rendered = False
         self.classname = None
         self.parent = parent
         self.params = {}
         self.doc = "NoDoc"
         self.gltf_path = ""
-        self.view = [[1, 1, 1], [0, 0, 0]]
+        self.image_path = ""
+        self.view = {}
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -61,6 +64,7 @@ class thing(NodeMixin):
             "view": self.view,
             "gltf_path": self.gltf_path,
             "loaded": self.loaded,
+            "image_path": self.image_path,
         }
         if self.parent is not None:
             val["parent"] = self.parent.get_path()
@@ -72,6 +76,7 @@ class thing(NodeMixin):
             "leaf": self.is_leaf,
             "built": self.built,
             "name": self.name,
+            "image_path": self.image_path,
         }
         return val
 
@@ -93,7 +98,7 @@ class Directory:
         self.build_tree(name, self.root)
         self.build_other()
 
-        self.store = db.Store()
+        self.store = db.Store(prefix=prefix)
 
     def build_other(self):
         p = thing("lib", parent=self.root)
@@ -116,6 +121,10 @@ class Directory:
         r = self.res.get(self.root, path)
         return r
 
+    def get_name(self, name):
+        n = find_by_attr(self.root, name)
+        return n
+
     def exists(self, key):
         if key in self.k:
             return True
@@ -132,6 +141,7 @@ class Directory:
                 self.store.fetch(i)
             l.append(i.dir())
         data["list"] = l
+        data["name"] = v.name
         data["path"] = v.get_path()
         return data
 
@@ -167,6 +177,22 @@ class Directory:
         t.gltf_path = "/" + self.export_path + "/" + t.name + "/out.gltf"
         # t.render(render.event)
 
+    def set_image(self, imgname):
+        name = imgname.split(".")[0]
+        t = self.get_name(name)
+        if t is not None:
+            path = (
+                os.sep
+                + self.export_prefix
+                + os.sep
+                + self.export_path
+                + os.sep
+                + "img"
+                + os.sep
+            )
+            t.image_path = path + imgname
+            self.store.upsert(t)
+
     def fetch(self, t):
         self.store.fetch(t)
         # due to multiple export paths (for dumping)
@@ -196,6 +222,21 @@ class Directory:
             self.store.upsert(t)
         info = t.info()
         return info
+
+    def get_zipped(self, t):
+        r = self.export_prefix + os.sep + self.export_path + os.sep + t.name + os.sep
+        export_folder = self.export_prefix + os.sep + "zip"
+        zip_file = export_folder + os.sep + t.name + ".zip"
+        f = os.listdir(r)
+        try:
+            os.makedirs(export_folder)
+        except:
+            pass
+        z = zipfile.ZipFile(zip_file, "w")
+        for i in f:
+            z.write(r + i, t.name + os.sep + i)
+        z.close()
+        return zip_file
 
     def treeiter(self, key):
         nodes = []
