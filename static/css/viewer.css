@@ -1,11 +1,17 @@
 /* CSS for the viewer */
+#show {
+	display:none;
+	position:absolute;
+	top: 5px;
+	left: 5px;
+}
 
-#autorotate {
-    position: absolute;
-    left: 5px;
-};
+#info {
+	position:absolute;
+	top: 5px;
+	left: 5px;
+}
 
-floater {
-    position: absolute;
-    width: auto;
-};
+#hide{
+	float:right;
+}
