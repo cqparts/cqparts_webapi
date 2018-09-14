@@ -115,7 +115,7 @@ class Directory:
                 cn = type(k()).__module__ + "." + k.__name__
                 t = thing(k.__name__, parent=b, c=k, classname=cn, doc=k.__doc__)
                 self.class_dict[cn] = t
-                self.k[p.get_path()+ "/" + j + "/" + k.__name__] = t
+                self.k[p.get_path() + "/" + j + "/" + k.__name__] = t
 
     def get_path(self, path):
         r = self.res.get(self.root, path)
@@ -126,7 +126,7 @@ class Directory:
         return n[0]
 
     def exists(self, key):
-        if key in self.k:
+        if "/" + key in self.k:
             return True
         return False
 
@@ -156,6 +156,8 @@ class Directory:
                     pass
             item = self.class_dict[key]
             item.params.update(fixes)
+            item.rendered = False
+            self.store.upsert(item)
             self.export(item)
 
     def export(self, t):
@@ -203,7 +205,7 @@ class Directory:
         if self.exists(key) == False:
             print(str(key) + "keyfail")
             print(self.k.keys())
-        t = self.k["/"+key]
+        t = self.k["/" + key]
         d = {}
         if t.loaded == False:
             self.fetch(t)

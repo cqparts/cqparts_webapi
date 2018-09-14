@@ -4,7 +4,7 @@ import math
 
 # ewwork of
 # scene size is [[x1,y1,z1],[x2,y2,z2]
-def placed(scene_size, fudge=2.5, fov=30.0, rescale=1000.0):
+def placed(scene_size, fudge=1.4, fov=30.0, rescale=1000.0):
     # camera location & target
     cnt = centroid(scene_size, rescale)
     cam_t = cnt  # [0,0,cnt[2]]

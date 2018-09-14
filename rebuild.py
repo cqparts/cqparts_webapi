@@ -13,5 +13,5 @@ for i in l:
     if i.is_leaf:
         print(i.name)
         d.params(i.info()["path"][1:])
-        i.built = true
+        i.built = True
         d.store.upsert(i)

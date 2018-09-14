@@ -13,14 +13,14 @@
                 <div id="show">
 		<button class="button " onclick="showHide()">Show</button>
                 {% if item.parent %}
-                <a href="/list{{ item.parent }}">{{ item.parent }}</a>
+                <a href="{{ item.parent }}">{{ item.parent }}</a>
                 {% endif %}
                 </div>
 		<div id="info" class="box panel" style="position: absolute">
 			<button id="hide" class="button" onclick="showHide()">Hide</button>
 			<h1 class="title is-4">{{item.name}}</h1>
 			{% if item.parent %}
-			<a href="/list{{ item.parent }}">{{ item.parent }}</a>
+			<a href="{{ item.parent }}">{{ item.parent }}</a>
 			{% endif %}
 			{% if item.doc%}
 			<div class="message is-small">{{item.doc}}</div>
@@ -28,8 +28,6 @@
 			<br>
 			<span class="tag">{{item.classname}}</span>
 			<hr>
-			<form id="paramform" method="post"> </form>
-			<input form="paramform" type="hidden" name="classname" value="{{item.classname}}">
 			<table class="table is-narrow is-hoverable">
 				<thead>
 					<tr>
@@ -39,25 +37,18 @@
 				</thead>
 				{% for key, value in item.params.items() %}
 				<tr>
-					<td>{{ key }} </td><td> <input form="paramform" type="text" name="{{ key }}" value="{{ value}}"></td>
+					<td>{{ key }} </td><td> {{ value}}</td>
 				</tr>
 				{% endfor %}
 			</table>
-			<input class="button" form="paramform" type="submit" value="Submit">
 			<hr>
-			Save Variant
-			<br>
-			<input form="paramform" type="checkbox" name="save">
-			<input form="paramform" type="text">
-			<input class="button is-small" form="paramform" type="submit" value="Submit">
-			<br>
 		</div>
 		<script src="/static/js/cqpartsViewer.js"></script>
 		<script src="/static/js/app.js"></script>
 		<script>
-			load('/static/cache/{{item.name}}/out.gltf');
-camera.position.set({{item.view.camera_pos}});
-controls.target.set({{item.view.camera_target}});
+			load('/model/{{item.name}}/out.gltf');
+                        camera.position.set({{item.view.camera_pos}});
+                        controls.target.set({{item.view.camera_target}});
 		</script>
 	</body>
 </html>

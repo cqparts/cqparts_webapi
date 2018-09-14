@@ -4,23 +4,29 @@
     <link rel="stylesheet" href="/static/css/bulma.css">
    </head>
   <body style="margin:0;">
-        <div id="info" class="box panel">
-        <h1 class="title is-4">{{dirs.name}}</h1>
-        {% if dirs.parent %}
-        <a href="/list{{dirs.parent}}">{{dirs.parent}}</a>
-        {% endif %}
+	  <div class="container">
+	     <h1 class="title">CQparts Bucket</h1>
+        <div class="box">
+	<nav class="breadcrumb">
+		<ul>
+		{% if dirs.parent %}
+		<li> <a href="{{dirs.parent}}">{{dirs.parent}}</a> </li>
+		{% endif %}
+		</ul>
+	</nav>
 	<hr>
+	<h2 class="title">{{dirs.name}}</h2>
 	{% for cols in dirs.list|sort|batch(4) %}
 	<div class="columns ">
 		{% for n in cols %}
 		<div class="column is-one-quarter">
 			{% if n.leaf %}
-				<a href="/show{{n.path}}">
+				<a href="{{n.path}}">
 				<div class="box">
 				{{n.name}}
 				{% if n.image_path %}
 				<figure class="image">
-				<a href="/show{{n.path}}">
+				<a href="/{{n.path}}">
 				<img src="{{n.image_path}}">
 				</a>
 				</figure>
@@ -28,7 +34,7 @@
 				</div>
 				</a>
 			{% else %}
-				<a class="" href="/list{{n.path}}">
+				<a class="" href="{{n.path}}">
 					<div class="box content">
 						<h2 class="title is-5">{{n.name}}</h2>
 					</div>
@@ -39,5 +45,6 @@
      	</div>
         {% endfor %}
 	</div>
+        </div>
    </body>
 </html>
