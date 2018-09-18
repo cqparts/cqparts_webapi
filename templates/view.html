@@ -55,7 +55,7 @@
 		<script src="/static/js/cqpartsViewer.js"></script>
 		<script src="/static/js/app.js"></script>
 		<script>
-			load('/static/cache/{{item.name}}/out.gltf');
+			load('{{item.gltf_path}}/out.gltf');
 camera.position.set({{item.view.camera_pos}});
 controls.target.set({{item.view.camera_target}});
 		</script>

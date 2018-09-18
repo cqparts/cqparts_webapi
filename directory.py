@@ -35,6 +35,7 @@ class thing(NodeMixin):
         self.gltf_path = ""
         self.image_path = ""
         self.view = {}
+        self._hidden = ""
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -85,7 +86,7 @@ class thing(NodeMixin):
 
 
 class Directory:
-    def __init__(self, base, name, prefix="static", export="cache"):
+    def __init__(self, base, name, prefix="cache", export="model"):
         self.name = name
         self.d = cs.index.copy()
         self.res = Resolver("name")
@@ -199,7 +200,7 @@ class Directory:
         self.store.fetch(t)
         # due to multiple export paths (for dumping)
         # this is set by itself
-        t.gltf_path = "/" + self.export_path + "/" + t.name + "/out.gltf"
+        t.gltf_path = "/" + self.export_prefix + "/" + self.export_path + "/" + t.name
 
     def params(self, key):
         if self.exists(key) == False:
@@ -221,6 +222,7 @@ class Directory:
             t.params = d
             self.export(t)
             t.built = True
+            t.rendered = False
             self.store.upsert(t)
         info = t.info()
         return info

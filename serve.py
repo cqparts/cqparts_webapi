@@ -21,6 +21,7 @@ app.register_blueprint(render.renderbp)
 d = directory.Directory("cqparts", "export")
 api.d = d
 render.d = d
+cache.d = d
 
 # don't cache
 @app.after_request

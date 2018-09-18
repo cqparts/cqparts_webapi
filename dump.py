@@ -11,7 +11,7 @@ import os
 prefix = "dump"
 github = "http://github.com/zignig/cqparts_bucket/blob/master/"
 app = Flask(__name__)
-d = directory.Directory("cqparts", "export") #, prefix=prefix, export="model")
+d = directory.Directory("cqparts", "export")  # , prefix=prefix, export="model")
 
 # grabthe templating environment
 j = app.jinja_env
@@ -21,9 +21,11 @@ def make_view(item):
     html = j.get_template("dump_show.html").render(item=item)
     return html
 
+
 def make_page(item):
     html = j.get_template("dump_list.html").render(dirs=item)
     return html
+
 
 def make_index(l):
     html = j.get_template("dump_index.html").render(list=l)
@@ -35,9 +37,9 @@ l = d.treeiter("/cqparts/export")
 file_list = []
 for i in l:
     info = i.info()
-    #print(i,info)
+    # print(i,info)
     if i.is_leaf:
-        #print(i.name,i.get_path())
+        # print(i.name,i.get_path())
         d.params(i.info()["path"][1:])
         try:
             os.makedirs(prefix + "/" + i.get_path())
