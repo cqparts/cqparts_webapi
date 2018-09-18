@@ -18,5 +18,5 @@ for i in l:
         file_name = inspect.getsourcefile(i.c)
         line_number = inspect.getsourcelines(i.c)[1]
         # print(name, file_name, line_number)
-        i.image_path = "/static/cache/img/" + i.name + ".png"
+        i.image_path = "/cache/img/" + i.name + ".png"
         d.store.upsert(i)

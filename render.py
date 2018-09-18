@@ -33,7 +33,7 @@ def image():
     except:
         abort(403)
         return
-    export_path = d.export_prefix + os.sep + d.export_path + os.sep + "img" + os.sep
+    export_path = d.export_prefix + os.sep + "img" + os.sep
     data.save(export_path + data.filename)
     d.set_image(data.filename)
     return "OK"

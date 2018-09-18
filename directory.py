@@ -177,7 +177,7 @@ class Directory:
         v = r(gltf_path)
         view = [r.scene_min, r.scene_max]
         t.view = views.placed(view)
-        t.gltf_path = "/" + self.export_path + "/" + t.name + "/out.gltf"
+        t.gltf_path = "/" + self.export_prefix + "/" + self.export_path + "/" + t.name
         # t.render(render.event)
 
     def set_image(self, imgname):
@@ -187,8 +187,6 @@ class Directory:
             path = (
                 os.sep
                 + self.export_prefix
-                + os.sep
-                + self.export_path
                 + os.sep
                 + "img"
                 + os.sep
