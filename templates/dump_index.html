@@ -1,20 +1,33 @@
 <!doctype html>
 <html>
    <head>
-	   <title>cqparts bucket export</title
-    <link rel="stylesheet" href="/static/css/viewer.css">
+    <link rel="stylesheet" href="/static/css/bulma.css">
    </head>
-   <h1>CQparts bucket dump</h1>
-  <body style="margin:0; overflow:hidden;">
-	<div style="position: absolute">
-     <ul>
-        {% for n in list%}
-	<li>
-		<a href="/{{n.page}}">{{n.name}}</a>
-	</li>
+  <body style="margin:0;">
+        <div id="info" class="box panel">
+        <h1 class="title is-4">CQparts</h1>
+        <a href="/">Index </a>
+	<hr>
+	{% for cols in list|sort|batch(5) %}
+	<div class="columns ">
+		{% for n in cols %}
+		<div class="column is-one-fifth">
+                    <a href="{{n.path}}">
+                    <div class="box">
+                    {{n.name}}
+                    {% if n.image_path %}
+                    <figure class="image">
+                    <a href="{{n.path}}">
+                    <img src="{{n.image_path}}">
+                    </a>
+                    </figure>
+                    {% endif %}
+                    </div>
+                    </a>
+		</div>
+		{% endfor %}
+     	</div>
         {% endfor %}
-     </ul>
-	HINT: in the viewer , if you hover over a part and press [space] it will hide it. [a] to show all
 	</div>
    </body>
 </html>

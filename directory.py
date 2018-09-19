@@ -97,6 +97,7 @@ class Directory:
         self.export_prefix = prefix
         self.root = thing(base)
         self.build_tree(name, self.root)
+        self.build_tree("showcase", self.root)
         self.build_other()
 
         self.store = db.Store(prefix=prefix)
@@ -142,6 +143,7 @@ class Directory:
                 self.store.fetch(i)
             l.append(i.dir())
         data["list"] = l
+        data["leaf"] = False
         data["name"] = v.name
         data["path"] = v.get_path()
         return data
@@ -184,13 +186,7 @@ class Directory:
         name = imgname.split(".")[0]
         t = self.get_name(name)
         if t is not None:
-            path = (
-                os.sep
-                + self.export_prefix
-                + os.sep
-                + "img"
-                + os.sep
-            )
+            path = os.sep + self.export_prefix + os.sep + "img" + os.sep
             t.image_path = path + imgname
             self.store.upsert(t)
 

@@ -18,10 +18,10 @@ def model(modelname, filename):
 
 @cachebp.route("/img/<modelname>")
 def image(modelname):
-    name = modelname.split('.')[0]
+    name = modelname.split(".")[0]
     v = d.get_name(name)
     if v is None:
         abort(404)
         return
-    path = "./" + d.export_prefix + "/img/" + modelname 
+    path = "./" + d.export_prefix + "/img/" + modelname
     return send_file(path)

@@ -15,8 +15,9 @@ for i in l:
     d.store.upsert(i)
     if i.is_leaf:
         name = i.name
+        print(i.info())
         file_name = inspect.getsourcefile(i.c)
         line_number = inspect.getsourcelines(i.c)[1]
         # print(name, file_name, line_number)
-        i.image_path = "/cache/img/" + i.name + ".png"
-        d.store.upsert(i)
+        # i.image_path = "/cache/img/" + i.name + ".png"
+        # d.store.upsert(i)

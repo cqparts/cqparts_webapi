@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>CQParts display-o-tron</title>
+		<title>CQParts {{ item.name }}</title>
 		<link rel="stylesheet" href="/static/css/bulma.css">
 		<link rel="stylesheet" href="/static/css/viewer.css">
 		<script src="/static/js/three.min.js"></script>
@@ -41,7 +41,18 @@
 				</tr>
 				{% endfor %}
 			</table>
-			<hr>
+                        <span class="tag is-success">Hint!</span>
+                        <div class="content is-small">
+                        Hover to select,<br>
+                        <span class="tag ">Space </span>to hide
+                        <span class="tag ">a </span>to show all
+                        </div>
+                        <div class="content is-small">
+                        If you had the 
+			<a target="_blank" href="https://github.com/zignig/cqparts_webapi">webapi</a> 
+                        this would be <br>an interactive form that builds on demand
+                        </div>
+                        <br><a target="_blank" class="tag is-link" href="{{item.github}}">Source Code</a><br>
 		</div>
 		<script src="/static/js/cqpartsViewer.js"></script>
 		<script src="/static/js/app.js"></script>

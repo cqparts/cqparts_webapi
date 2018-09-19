@@ -56,6 +56,7 @@ class Store:
             t.view = data["view"]
             t.params = data["params"]
             t.image_path = data["image_path"]
+            t.gltf_path = data["gltf_path"]
 
     def upsert(self, t):
         s = select([func.count(self.things.c.id)]).where(
@@ -73,6 +74,7 @@ class Store:
                 ins,
                 prefix=self.prefix,
                 classname=t.classname,
+                built=t.built,
                 name=t.name,
                 jsondata=jsdata,
                 render=t.rendered,
@@ -84,4 +86,4 @@ class Store:
                     self.things.c.prefix == self.prefix,
                 )
             )
-            self.conn.execute(upd, name=t.name, jsondata=jsdata)
+            self.conn.execute(upd, built=t.built, name=t.name, jsondata=jsdata)

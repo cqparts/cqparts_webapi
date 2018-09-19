@@ -10,10 +10,10 @@
         <a href="/list{{dirs.parent}}">{{dirs.parent}}</a>
         {% endif %}
 	<hr>
-	{% for cols in dirs.list|sort|batch(5) %}
+	{% for cols in dirs.list|sort|batch(4) %}
 	<div class="columns ">
 		{% for n in cols %}
-		<div class="column is-one-fifth">
+		<div class="column is-one-quarter">
 			{% if n.leaf %}
 				<a href="/show{{n.path}}">
 				<div class="box">

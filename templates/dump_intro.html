@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+   <head>
+    <link rel="stylesheet" href="/static/css/bulma.css">
+   </head>
+  <body style="margin:0;">
+        <div class="container">
+            <section class="hero">
+                <div class="hero-body">
+                    <h1 class="title is-1 has-text-centered">CQparts geometry server</h1>
+                </div>
+            </section>
+            <h1 class="title is-3">Showcase</h1>
+            {% for cols in dirs|sort|batch(4) %}
+            <div class="columns ">
+                    {% for n in cols %}
+                    <div class="column is-one-fifth-quarter">
+                        <a href="{{n.path}}">
+                        <div class="box">
+                        {{n.name}}
+                        {% if n.image_path %}
+                        <figure class="image">
+                        <a href="{{n.path}}">
+                        <img src="{{n.image_path}}">
+                        </a>
+                        </figure>
+                        {% endif %}
+                        </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+            </div>
+            {% endfor %}
+            <h1 class="title is-3">Everything Else</h1>
+            <a class="button is-big" href="/cqparts/">Everything Else</a>
+        </div>
+   </body>
+</html>
