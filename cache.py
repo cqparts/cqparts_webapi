@@ -12,7 +12,7 @@ def model(modelname, filename):
     if v is None:
         abort(404)
         return
-    path = "./" + v.gltf_path + "/" + filename
+    path = v.gltf_path[1:] + "/" + filename
     return send_file(path)
 
 

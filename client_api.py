@@ -1,7 +1,7 @@
 import requests
 import os, json
 
-server = os.environ["CQPARTS_SERVER"]
+server = os.environ["CQPARTS_PROXY"]
 api_path = "/api/v0/"
 
 

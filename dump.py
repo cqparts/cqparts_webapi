@@ -14,7 +14,8 @@ from client_api import cqparts_api
 import directory
 
 
-prefix = "/opt/zignig.github.io/"
+#prefix = "/opt/cqparts.github.io/"
+prefix = "dump"
 github = "http://github.com/zignig/cqparts_bucket/blob/master/"
 app = Flask(__name__)
 d = directory.Directory("cqparts", "export")
@@ -64,7 +65,7 @@ def build():
     unbuilt = api.unbuilt()
     for i in unbuilt:
         path = i["path"]
-        c.show(path)
+        api.show(path)
     # copy files into place
     static_files()
     model_files()
@@ -123,10 +124,13 @@ def build_pages(l):
     # frontpage
     showcase = api.showcase()
     # fix the image path
-    for k in showcase:
-        print(k)
-        k["image_path"] = "/img/" + k["name"] + ".png"
-        #k["path"] = d.base +"/" + d.name +k["name"]
+    if showcase is not None:
+        for k in showcase:
+            print(k)
+            k["image_path"] = "/img/" + k["name"] + ".png"
+            #k["path"] = d.base +"/" + d.name +k["name"]
+    else:
+        showcase = []
     index = make_intro(showcase)
     f = open(prefix + "/index.html", "w")
     f.write(index)

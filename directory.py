@@ -3,10 +3,12 @@ import sys, os
 
 sys.path.append("..")
 
-import cqparts_bucket
-import cqparts
+#import cqparts_bucket
 from cqparts_bucket import *
+from experimental.zignig import *
+
 import cqparts.search as cs
+import cqparts
 from cqparts.display import display
 
 import json
@@ -20,6 +22,24 @@ import views
 import render
 import db
 
+from importlib import import_module
+
+class importotron:
+    def __init__(self,mods):
+        self.mods = mods
+        for i in self.mods:
+            try:
+                m = import_module(i)
+                print("importing "+i)
+                if hasattr(m,"__all__"):
+                    print(m.__all__)
+            except:
+                print("fail on "+i)
+        
+
+mods = [ 'borken' , 'cqparts_bucket' , 'experimental' ]
+
+i = importotron(mods)
 
 class thing(NodeMixin):
     def __init__(self, name, parent=None, **kwargs):
@@ -100,8 +120,18 @@ class Directory:
         self.build_tree("showcase", self.root)
         self.build_other()
 
+        self.alter_build(name)
         self.store = db.Store(prefix=prefix)
 
+    def alter_build(self,name):
+        reg = cs.index.copy()
+        print("this is a test")
+        s = reg[name]
+        keys = s.keys()
+        for i in keys:
+            sub = s[i].copy()
+            print(i,sub)
+        
     def build_other(self):
         p = thing("lib", parent=self.root)
         k = self.d.keys()
@@ -109,6 +139,8 @@ class Directory:
             self.build_tree(i, p)
 
     def build_tree(self, name, root):
+        if name not in self.d:
+            return
         p = thing(name, parent=root)
         tr = self.d.pop(name)
         for j in tr:
@@ -244,3 +276,6 @@ class Directory:
                 self.fetch(node)
             nodes.append(node)
         return nodes
+
+if __name__ == "__main__":
+    d = Directory("cqparts","export")
