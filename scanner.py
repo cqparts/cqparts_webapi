@@ -11,13 +11,17 @@ l = d.treeiter("/cqparts/export")
 
 for i in l:
     # s.upsert(i)
-    print(i)
+    #print(i)
     d.store.upsert(i)
     if i.is_leaf:
         name = i.name
-        print(i.info())
-        file_name = inspect.getsourcefile(i.c)
-        line_number = inspect.getsourcelines(i.c)[1]
+        #print(i.info())
+        c = inspect.getmro(i.c)
+        print(name)
+        for i in c:
+            print("\t"+str(i))
+        #file_name = inspect.getsourcefile(i.c)
+        #line_number = inspect.getsourcelines(i.c)[1]
         # print(name, file_name, line_number)
         # i.image_path = "/cache/img/" + i.name + ".png"
         # d.store.upsert(i)
