@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CQParts , pythonic stuff</title>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+  <!-- Bulma Version 0.7.2-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+  <!-- <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" type="text/css" href="../css/personal.css">
+  <script async type="text/javascript" src="../js/bulma.js"></script>
+</head>
+
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar is-link is-fixed-top">
+    <div class="navbar-brand">
+      <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navbarExampleTransparentExample" class="navbar-menu">
+      <div class="navbar-end">
+        {% for key in data.sections %}
+        <a class="navbar-item" href="#{{key}}">
+          <span class="icon">
+            <i class="fas fa-info"></i>
+          </span>
+          <span>{{ key }} </span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="hero is-link is-fullheight is-fullheight-with-navbar">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-1">
+            {{ data.title }}
+        </h1>
+        <h2 class="subtitle is-3">
+            {{ data.headline }}
+        </h2>
+      </div>
+    </div>
+  </section>
+
+{% for key in data.sections  %}
+  <!-- {{ key }}-->
+  <section class="section" id="{{key}}">
+    <!-- Title -->
+    <div class="section-heading">
+      <h3 class="title is-2">{{ key }}</h3>
+      <h4 class="subtitle is-5">{{ data.sections[key].sub }}</h4>
+      <div class="container">
+            {{ data.sections[key].text }}
+      </div>
+    </div>
+  </section>
+{% endfor %}
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="section-heading">
+      <p>
+        <strong>CQparts</strong> <a target="_blank" href="https://github.com/cqparts/cqparts">Github</a>
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -4,6 +4,7 @@ import sys, os
 # working inside the lib
 
 import json
+import yaml
 
 from flask import Flask, jsonify, abort, render_template, request, session
 
@@ -23,6 +24,8 @@ api.d = d
 render.d = d
 cache.d = d
 
+front = yaml.load(open('inf.yaml').read())
+
 # don't cache
 @app.after_request
 def add_header(response):
@@ -34,13 +37,12 @@ def add_header(response):
 @app.route("/")
 def base():
     session["bork"] = True
-    return render_template("list.html", dirs=d.prefix(d.base))
+    return render_template("landing.html", data=front)
 
 
 @app.route("/list/<path:modelname>")
 def subcat(modelname):
     return render_template("list.html", dirs=d.prefix(modelname))
-
 
 @app.route("/show/<path:modelname>", methods=["GET", "POST"])
 def show_model(modelname):

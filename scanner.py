@@ -9,6 +9,7 @@ d = directory.Directory("cqparts", "export")
 
 l = d.treeiter("/cqparts/export")
 
+files = {}
 for i in l:
     # s.upsert(i)
     #print(i)
@@ -18,10 +19,15 @@ for i in l:
         #print(i.info())
         c = inspect.getmro(i.c)
         print(name)
-        for i in c:
-            print("\t"+str(i))
-        #file_name = inspect.getsourcefile(i.c)
+        #for i in c:
+        #    print("\t"+str(i))
+        file_name = inspect.getsourcefile(i.c)
+	print(file_name)
+        files[file_name] = ''
         #line_number = inspect.getsourcelines(i.c)[1]
         # print(name, file_name, line_number)
         # i.image_path = "/cache/img/" + i.name + ".png"
         # d.store.upsert(i)
+
+for i in files:
+    print i
