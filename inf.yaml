@@ -1,13 +1,12 @@
 title: CQParts
 headline: Build tangible parametric desgins in python 
 sections:
-  About:
+  about:
     title: CQparts
     sub: Build tangible objects with python
-  Description:
+  description:
     title: Leverage python and OCC to build 3D objects
-    sub: yay
-  Stuff:
-    title: Moooooaar Stuff 
-    sub: hello
-    text: 'this is stuff'
+    sub: this is also a test
+  examples:
+    title: Examples of CQParts objects' 
+    sub: things 

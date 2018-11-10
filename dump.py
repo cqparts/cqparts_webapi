@@ -7,15 +7,18 @@ from flask import Flask, jsonify, abort, render_template, request, session
 # import directory
 import inspect
 import os
+import yaml
 import requests, json
 import distutils.dir_util
 
 from client_api import cqparts_api
 import directory
+import landing
 
 
-#prefix = "/opt/cqparts.github.io/"
-prefix = "dump"
+
+prefix = "/opt/cqparts.github.io/"
+#prefix = "dump"
 github = "http://github.com/zignig/cqparts_bucket/blob/master/"
 app = Flask(__name__)
 d = directory.Directory("cqparts", "export")
@@ -36,8 +39,7 @@ def make_page(item):
 
 
 def make_intro(item):
-    html = j.get_template("dump_intro.html").render(dirs=item)
-    return html
+    return landing.get_landing(app) 
 
 
 def make_index(l):
