@@ -21,7 +21,7 @@ prefix = "/opt/cqparts.github.io/"
 #prefix = "dump"
 github = "http://github.com/zignig/cqparts_bucket/blob/master/"
 app = Flask(__name__)
-d = directory.Directory("cqparts", "export")
+d = directory.Directory("examples", "export")
 api = cqparts_api()
 # grabthe templating environment
 j = app.jinja_env
@@ -120,7 +120,7 @@ def build_pages(l):
 
     # cqparts top directory
     top_list = make_index(file_list)
-    f = open(prefix + "/cqparts/index.html", "w")
+    f = open(prefix + "/"+ d.base +"/index.html", "w")
     f.write(top_list)
     f.close()
     # landing page

@@ -21,9 +21,7 @@ def get_landing(app,d,local=True):
     for i in sections.keys():
         try:
             sec = tmpl.get_template('landing/'+i+'.html')
-            print(i+' got template')
             sections[i]['data'] = sec.render(list=sc)
-            print sections
         except:
             print(i+' FAILED')
          

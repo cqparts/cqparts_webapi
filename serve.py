@@ -20,7 +20,7 @@ app.secret_key = "sort of but not actually that secret"
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
 app.register_blueprint(render.renderbp)
-d = directory.Directory("cqparts", "export")
+d = directory.Directory("examples", "export")
 api.d = d
 render.d = d
 cache.d = d
