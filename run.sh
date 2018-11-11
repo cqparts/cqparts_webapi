@@ -1,2 +1,2 @@
 #!/bin/sh
-CompileDaemon -build 'echo' -command 'python serve.py' -pattern "\.html"
+CompileDaemon -build 'echo' -command 'python serve.py' -pattern "\.py"

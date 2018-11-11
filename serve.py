@@ -13,6 +13,7 @@ import cache
 import views
 import render
 import directory
+import landing
 
 app = Flask(__name__)
 app.secret_key = "sort of but not actually that secret"
@@ -37,7 +38,8 @@ def add_header(response):
 @app.route("/")
 def base():
     session["bork"] = True
-    return render_template("landing.html", data=front)
+    return landing.get_landing(app,d,local=False)
+    #return render_template("landing.html", data=front)
 
 
 @app.route("/list/<path:modelname>")

@@ -7,12 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CQParts , pythonic stuff</title>
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
   <!-- Bulma Version 0.7.2-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+  <link rel="stylesheet" href="/static/css/bulma.css" />
   <!-- <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet"> -->
-  <link rel="stylesheet" type="text/css" href="../css/personal.css">
   <script async type="text/javascript" src="../js/bulma.js"></script>
 </head>
 
@@ -45,9 +42,7 @@
   <section class="hero is-link is-fullheight is-fullheight-with-navbar">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title is-1">
-            {{ data.title }}
-        </h1>
+        <img src="/static/media/dark.svg" alt="{{data.title}}"></img>
         <h2 class="subtitle is-3">
             {{ data.headline }}
         </h2>
@@ -60,10 +55,10 @@
   <section class="section is-fullheight is-fullheight-with-navbar" id="{{key}}">
     <!-- Title -->
     <div class="section-heading">
-      <h3 class="title is-2">{{ key }}</h3>
+      <h3 class="title is-2">{{ key|title }}</h3>
       <h4 class="subtitle is-5">{{ data.sections[key].sub }}</h4>
       <div class="container">
-            {{ data.sections[key].text }}
+            {{ data.sections[key].data|safe}}
       </div>
     </div>
   </section>

@@ -38,8 +38,8 @@ def make_page(item):
     return html
 
 
-def make_intro(item):
-    return landing.get_landing(app) 
+def make_intro():
+    return landing.get_landing(app,d) 
 
 
 def make_index(l):
@@ -123,17 +123,8 @@ def build_pages(l):
     f = open(prefix + "/cqparts/index.html", "w")
     f.write(top_list)
     f.close()
-    # frontpage
-    showcase = api.showcase()
-    # fix the image path
-    if showcase is not None:
-        for k in showcase:
-            print(k)
-            k["image_path"] = "/img/" + k["name"] + ".png"
-            #k["path"] = d.base +"/" + d.name +k["name"]
-    else:
-        showcase = []
-    index = make_intro(showcase)
+    # landing page
+    index = make_intro()
     f = open(prefix + "/index.html", "w")
     f.write(index)
     f.close()

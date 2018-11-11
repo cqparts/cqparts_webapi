@@ -1,12 +1,19 @@
 title: CQParts
-headline: Build tangible parametric desgins in python 
+headline: Build tangible programmatic desgins in python.
+section_order: ['about','develop','description']
 sections:
   about:
     title: CQparts
     sub: Build tangible objects with python
+  develop:
+    title: Develop CQParts on github
+    sub: We need your help 
   description:
     title: Leverage python and OCC to build 3D objects
     sub: this is also a test
   examples:
     title: Examples of CQParts objects' 
     sub: things 
+  webapi:
+    title:  http interface to cqparts.
+    sub: rest interface and html pages 
