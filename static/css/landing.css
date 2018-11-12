@@ -1,7 +1,7 @@
 .section-heading {
-  text-align: center;
+  text-align: left;
   margin-top: 1em;
-  margin-bottom: 6em;
+  margin-bottom: 2em;
 }
 
 .section {
@@ -15,5 +15,8 @@
 
 .hero.is-link {
     background-color: #505050;
-    color: #fff;
+    background-image: url(/img/Rover.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

@@ -1,7 +1,7 @@
-{% for cols in list|sort|batch(3) %}
+{% for cols in list|sort|batch(4) %}
 <div class="columns ">
         {% for n in cols %}
-        <div class="column is-one-third">
+        <div class="column is-one-quarter">
             <a href="{{n.path}}">
             <div class="box">
             {{n.name}}
@@ -18,3 +18,4 @@
         {% endfor %}
 </div>
 {% endfor %}
+<a class="button is-link" href="/examples">Everything Else</a>
