@@ -10,6 +10,7 @@
   <!-- Bulma Version 0.7.2-->
   <link rel="stylesheet" href="/static/css/bulma.css" />
   <link rel="stylesheet" href="/static/css/landing.css" />
+  <link rel="stylesheet" href="/static/css/materialdesignicons.min.css" />
   <!-- <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet"> -->
   <script async type="text/javascript" src="/static/js/bulma.js"></script>
 </head>
@@ -33,6 +34,9 @@
       <div class="navbar-end">
         {% for key in data.section_order %}
         <a class="navbar-item" href="#{{key}}">
+          {% if data.sections[key].icon %}
+          <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
+          {% endif %}
           <span>{{ key |title}} </span>
         </a>
         {% endfor %}
@@ -53,11 +57,15 @@
   </section>
 {% for key in data.section_order  %}
   <!-- {{ key }}-->
-  <section class="section is-fullheight is-fullheight-with-navbar" id="{{key}}">
+  <section class="section " id="{{key}}">
     <!-- Title -->
     <div class="section-heading">
-      <h3 class="title is-2">{{ key|title }}</h3>
-      <h4 class="subtitle is-5">{{ data.sections[key].sub }}</h4>
+      <h3 class="title is-2">
+      {% if data.sections[key].icon %}
+      <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
+      {% endif %}
+      {{ key|title }}</h3>
+      <h4 class="subtitle is-6">{{ data.sections[key].sub }}</h4>
       <div class="container">
             {{ data.sections[key].data|safe}}
       </div>

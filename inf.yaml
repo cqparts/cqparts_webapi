@@ -5,18 +5,24 @@ sections:
   about:
     title: CQparts
     sub: Build tangible objects with python
+    icon: mdi-information-outline
   develop:
     title: Develop CQParts on github
     sub: We need your help 
+    icon: mdi-github-box
   documentation:
     title: Documentation 
     sub: How to use it 
+    icon: mdi-file-document-box
   install:
     title: Get CQParts on your computer 
     sub: The bits that you need 
+    icon: mdi-cloud-download
   examples:
     title: Examples of CQParts objects
     sub: Showcase examples of what CQParts can do
+    icon: mdi-file-document
   webapi:
     title:  http interface to cqparts.
     sub: rest interface and html pages 
+    icon: mdi-cloud-print-outline
