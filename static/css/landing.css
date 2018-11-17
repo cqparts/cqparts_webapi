@@ -15,8 +15,7 @@
 
 .hero.is-link {
     background-color: #505050;
-    background-image: url(/img/Rover.png);
+    background-image: url('/static/media/poster.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
 }

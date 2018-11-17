@@ -1,10 +1,10 @@
 title: CQParts
 headline: Build tangible programmatic designs in python.
-section_order: ['about','documentation','examples','develop','install','webapi']
+section_order: ['about','examples','install','documentation','develop','webapi']
 sections:
   about:
     title: CQparts
-    sub: Build tangible objects with python
+    sub: "What is it?" 
     icon: mdi-information-outline
   develop:
     title: Develop CQParts on github
