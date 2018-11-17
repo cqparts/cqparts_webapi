@@ -15,3 +15,8 @@
 #hide{
 	float:right;
 }
+
+.ontop {
+        z-index: 40;
+        position: fixed;
+}

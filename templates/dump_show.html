@@ -17,6 +17,7 @@
                 {% endif %}
                 </div>
 		<div id="info" class="box panel" style="position: absolute">
+                    <progress id="progress" class="progress is-small is-success " value="0" max="100"></progress>
 			<button id="hide" class="button" onclick="showHide()">Hide</button>
 			<h1 class="title is-4">{{item.name}}</h1>
 			{% if item.parent %}

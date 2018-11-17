@@ -5,7 +5,7 @@ var camera, scene, renderer, light;
 var meshlist = [];
 var raycaster ;
 var mouse = new THREE.Vector2(), INTERSECTED ;
-
+var progress = document.getElementById('progress');
 init();
 animate();
 
@@ -14,6 +14,7 @@ function clear(){
 }
 
 function load(name){
+        progress.style.display = 'block';
 	var loader = new THREE.GLTFLoader();
 	loader.load( name, function ( gltf ) {
 		scene.add( gltf.scene );
@@ -25,6 +26,10 @@ function load(name){
                 meshlist.push(child);
             }
             } );
+        progress.style.display = 'none'; 
+        },
+        function (xhr){
+            progress.value = (xhr.loaded/xhr.total * 100);
         } );
     }
 
