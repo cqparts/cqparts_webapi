@@ -21,11 +21,12 @@ target =  "http://localhost:8089" #os.environ['CQPARTS_SERVER']
 folder = "/opt/stash/"
 section = ""
 render_sets = {}
+sess = requests.Session()
 
 def render_this(jdata):
     name = jdata['name']
     print(jdata)
-    r = requests.get(target+'/zipped/'+name,stream=True)
+    r = sess.get(target+'/zipped/'+name,stream=True)
     try:
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall(folder)
@@ -43,7 +44,7 @@ def make_blender(name,cam_loc,tgt_loc):
     #res = (320,240)
     #samples = 90 
     res = (640,480)
-    samples = 500 
+    samples = 10 
     #res = (1024,768)
     #samples = 200
     size_per = 100
@@ -124,7 +125,7 @@ def make_blender(name,cam_loc,tgt_loc):
 def uploader(name):
     file_ref = ('objs',(name+".png",open(folder+name+".png","rb")))
     try:
-        requests.post(target+'/image',files=[file_ref])
+        sess.post(target+'/image',files=[file_ref])
     except:
         print("upload fail")
         

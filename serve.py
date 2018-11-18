@@ -5,6 +5,7 @@ import sys, os
 
 import json
 import yaml
+import uuid
 
 from flask import Flask, jsonify, abort, render_template, request, session
 
@@ -14,9 +15,12 @@ import views
 import render
 import directory
 import landing
+import sessions
 
 app = Flask(__name__)
-app.secret_key = "sort of but not actually that secret"
+
+app.secret_key = os.environ["CQPARTS_SECURE"]
+#app.debug = True
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
 app.register_blueprint(render.renderbp)
@@ -25,7 +29,7 @@ api.d = d
 render.d = d
 cache.d = d
 
-front = yaml.load(open('inf.yaml').read())
+sess = sessions.SessionCollection(d.store)
 
 # don't cache
 @app.after_request
@@ -35,9 +39,19 @@ def add_header(response):
     return response
 
 
+@app.before_request
+def build_sess():
+    if session.has_key("id"):
+        s = sess.get(session['id'])
+        app.logger.error("have %s", s)
+#    else:
+#        "create key"
+#        s = sess.new()
+#        session["id"] = s.uuid 
+#        app.logger.error("create key %s", s)
+
 @app.route("/")
 def base():
-    session["bork"] = True
     return landing.get_landing(app,d,local=False)
     #return render_template("landing.html", data=front)
 
@@ -63,4 +77,4 @@ def rebuild():
 
 print(app.url_map)
 if __name__ == "__main__":
-    app.run(threaded=True, host="0.0.0.0", port=8089)
+    app.run(host="0.0.0.0", port=8089)

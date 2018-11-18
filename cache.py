@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, send_file, request
+from flask import Blueprint, Response, abort, send_file, request, jsonify
 import os
 
 cachebp = Blueprint("cache", __name__, url_prefix="/cache")
@@ -12,6 +12,8 @@ def model(modelname, filename):
     if v is None:
         abort(404)
         return
+    if v.gltf_path == "":
+        return jsonify(v.info())
     path = v.gltf_path[1:] + "/" + filename
     return send_file(path)
 

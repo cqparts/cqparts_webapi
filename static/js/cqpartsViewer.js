@@ -29,6 +29,7 @@ function load(name){
         progress.style.display = 'none'; 
         },
         function (xhr){
+            console.log(xhr.loaded,xhr.total);
             progress.value = (xhr.loaded/xhr.total * 100);
         } );
     }

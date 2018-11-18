@@ -2,6 +2,8 @@
 
 from sqlalchemy import *
 from sqlalchemy.sql import and_, or_, not_
+from sqlalchemy.types import Binary
+from sqlalchemy.types import TypeDecorator 
 
 # from directory import thing
 import json
@@ -20,6 +22,13 @@ class Store:
         self.db = create_engine(sql_string)
         self.metadata = MetaData()
         self.prefix = prefix
+
+        self.thing_table()
+        self.session_table()
+
+        self.metadata.create_all(self.db)
+
+    def thing_table(self):
         self.things = Table(
             "things",
             self.metadata,
@@ -32,9 +41,28 @@ class Store:
             Column("render", Boolean),
             Column("built", Boolean),
         )
-        self.metadata.create_all(self.db)
-        self.conn = self.db.connect()
 
+    def session_table(self):
+        self.sessions = Table(
+            "sessions",
+            self.metadata,
+            Column("id",String,primary_key=True),
+            Column("name",String),
+        )
+
+    def new_session(self,s):
+        conn = self.db.connect()
+        ins = self.sessions.insert()
+        conn.execute(
+            ins,
+            id= s.uuid,
+            name = s.name
+        )
+    def get_session(self,s):
+        conn = self.db.connect()
+        s = select(self.sessions).where( self.sessions.uuid == str(s.uuid) )
+        result = conn.execute(s)
+        return result     
     def list(self):
         s = select([self.things])
         conn = self.db.connect()
