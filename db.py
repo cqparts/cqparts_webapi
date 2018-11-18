@@ -10,6 +10,8 @@ import os
 # environmental variable so it does not get published
 # should be in the form
 # postgresql+psycopg2://user:password@host/database
+# or use sqlite3 
+# 'sqlite:///path/data.db'
 sql_string = os.environ["CQPARTS_DB"]
 
 
@@ -35,7 +37,8 @@ class Store:
 
     def list(self):
         s = select([self.things])
-        result = self.conn.execute(s)
+        conn = self.db.connect()
+        result = conn.execute(s)
         for row in result:
             print(row)
 
@@ -46,7 +49,8 @@ class Store:
                 self.things.c.prefix == self.prefix,
             )
         )
-        res = self.conn.execute(s)
+        conn = self.db.connect()
+        res = conn.execute(s)
         row = res.fetchone()
         if row is not None:
             t.loaded = True
@@ -65,12 +69,13 @@ class Store:
                 self.things.c.prefix == self.prefix,
             )
         )
-        res = self.conn.execute(s)
+        conn = self.db.connect()
+        res = conn.execute(s)
         exists = res.fetchone()[0]
         jsdata = json.dumps(t.info())
         if exists == 0:
             ins = self.things.insert()
-            self.conn.execute(
+            conn.execute(
                 ins,
                 prefix=self.prefix,
                 classname=t.classname,
@@ -86,4 +91,4 @@ class Store:
                     self.things.c.prefix == self.prefix,
                 )
             )
-            self.conn.execute(upd, built=t.built, name=t.name, jsondata=jsdata)
+            conn.execute(upd, built=t.built, name=t.name, jsondata=jsdata)
