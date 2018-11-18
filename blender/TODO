@@ -1,0 +1,12 @@
+[ ]  take render settings from server
+DONE this server should connect to the cqparts server
+DONE wait for events
+DONE grab the gltf as a zip file
+DONE unzip in temporary storage (NOT TEMP)
+DONE load the gltf
+DONE render
+DONE upload the image
+DONE wait for more events 
+
+the events should not be instant and the server should track what has been rendered or not.
+
