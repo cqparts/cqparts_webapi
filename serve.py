@@ -15,11 +15,10 @@ import views
 import render
 import directory
 import landing
-import sessions
+import sess
 
 app = Flask(__name__)
 
-app.secret_key = os.environ["CQPARTS_SECURE"]
 #app.debug = True
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
@@ -29,7 +28,8 @@ api.d = d
 render.d = d
 cache.d = d
 
-sess = sessions.SessionCollection(d.store)
+app.secret_key = os.environ["CQPARTS_SECURE"]
+app.session_interface = sess.SessionCollection(d.store)
 
 # don't cache
 @app.after_request
@@ -41,14 +41,9 @@ def add_header(response):
 
 @app.before_request
 def build_sess():
-    if session.has_key("id"):
-        s = sess.get(session['id'])
-        app.logger.error("have %s", s)
-#    else:
-#        "create key"
-#        s = sess.new()
-#        session["id"] = s.uuid 
-#        app.logger.error("create key %s", s)
+    if not "id" in session:
+        session["id"] = uuid.uuid4()
+        session.permanent=True
 
 @app.route("/")
 def base():
