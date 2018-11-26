@@ -16,6 +16,7 @@ import render
 import directory
 import landing
 import sess
+import config
 
 app = Flask(__name__)
 
@@ -23,6 +24,8 @@ app = Flask(__name__)
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
 app.register_blueprint(render.renderbp)
+app.register_blueprint(config.cfg)
+
 d = directory.Directory("examples", "export")
 api.d = d
 render.d = d
