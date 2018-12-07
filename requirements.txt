@@ -1,0 +1,8 @@
+pyyaml
+flask
+cadquery
+cqparts
+
+# for cqparts_bucket
+rectpack
+anytree
