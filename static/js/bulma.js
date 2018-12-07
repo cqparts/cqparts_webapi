@@ -3,8 +3,16 @@
 (function() {
     var burger = document.querySelector('.burger');
     var menu = document.querySelector('#'+burger.dataset.target);
+
+    // Toggle menu on burger
     burger.addEventListener('click', function() {
         burger.classList.toggle('is-active');
         menu.classList.toggle('is-active');
+    });
+    
+    // Deactivate menu on item selection
+    menu.addEventListener('click', function() {
+        burger.classList.remove('is-active');
+        menu.classList.remove('is-active');
     });
 })();
