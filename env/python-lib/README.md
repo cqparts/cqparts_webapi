@@ -14,6 +14,7 @@ mkdir _repos
 pushd _repos
 git clone https://github.com/zignig/cqparts_bucket
 git clone git@github.com:cqparts/cqparts.git
+git clone git@github.com:cqparts/experimental.git
 popd
 
 # Symlinking repos internals
@@ -26,6 +27,7 @@ ln -s _repos/cqparts/src/cqparts_gears .
 ln -s _repos/cqparts/src/cqparts_misc .
 ln -s _repos/cqparts/src/cqparts_motors .
 ln -s _repos/cqparts/src/cqparts_toys .
+ln -s _repos/experimental .
 ```
 
 ## `cadquery` as an example
