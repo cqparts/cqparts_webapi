@@ -20,4 +20,4 @@ ENV PYTHONPATH /code/${env_rel_path}/../python-lib
 ENV CQPARTS_DB sqlite:///code/data.db
 
 # default run command
-CMD python3 serve.py
+CMD bash run.sh
