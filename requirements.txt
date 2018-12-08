@@ -7,3 +7,7 @@ cqparts
 # for cqparts_bucket
 rectpack
 anytree
+
+# colourful debugging
+ipython
+ipdb
