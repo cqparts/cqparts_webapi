@@ -1,5 +1,6 @@
 pyyaml
 flask
+sqlalchemy
 cadquery
 cqparts
 

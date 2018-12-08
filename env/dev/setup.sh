@@ -9,10 +9,12 @@ Environment Variables:
     env_rel_path = ${env_rel_path}
 EOF
 
-# install from custom-packages folder
-#find /code/tests/env/custom-packages \
-#    -name *.tar.gz \
-#    -exec pip3 install {} \;
+# ------ Install Packages
+# apt
+apt install sqlite3
+# pip
+python3 -m pip install --upgrade pip
+python3 -m pip install -r /code/requirements.txt
 
-# install PyPI requirements
-pip3 install -r /code/requirements.txt
+# ------ Configure
+sqlite3 /code/data.db ""
