@@ -14,7 +14,6 @@ case "$1" in
     *)
         docker run --rm \
             --volume ${REPO_ROOT}:/code \
-            --publish ${port}:${port} \
             -it \
             ${IMAGE} \
             "${@:1}"
