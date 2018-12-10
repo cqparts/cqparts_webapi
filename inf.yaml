@@ -3,24 +3,30 @@ headline: Build tangible programmatic designs in python.
 section_order: ['about','examples','install','documentation','license','develop','webapi']
 sections:
   about:
-    title: cqparts
+    navbar: About
+    heading: About
     icon: mdi-information-outline
   examples:
-    title: Examples of CQParts objects
+    navbar: Examples
+    heading: Examples
     icon: mdi-file-document
   install:
-    title: Get CQParts on your computer
+    navbar: Install
+    heading: Install
     icon: mdi-cloud-download
   documentation:
-    title: Documentation
+    navbar: Docs
+    heading: Documentation
     icon: mdi-file-document-box
   license:
-    title: License
+    navbar: License
+    heading: License
     icon: mdi-clipboard-outline
   develop:
-    title: Develop CQParts on github
+    navbar: Dev
+    heading: Development
     icon: mdi-github-box
   webapi:
-    title:  http interface to cqparts.
-    sub: rest interface and html pages
+    navbar: WebAPI
+    heading: WebAPI
     icon: mdi-cloud-print-outline

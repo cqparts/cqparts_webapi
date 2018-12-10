@@ -45,7 +45,7 @@
           {% if data.sections[key].icon %}
           <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
           {% endif %}
-          <span>{{ key |title}} </span>
+          <span>{{ data.sections[key].navbar }}</span>
         </a>
         {% endfor %}
       </div>
@@ -69,10 +69,11 @@
     <!-- Title -->
     <div class="section-heading">
       <h3 class="title is-2">
-      {% if data.sections[key].icon %}
-      <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
-      {% endif %}
-      {{ key|title }}</h3>
+        {% if data.sections[key].icon %}
+        <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
+        {% endif %}
+        {{ data.sections[key].heading }}
+      </h3>
       {% if key in data.sections %}
       <h4 class="subtitle is-6">{{ data.sections[key].sub }}</h4>
       {% endif %}
