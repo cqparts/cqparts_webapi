@@ -17,7 +17,7 @@ USER ${tester_name}
 
 # runtime environment variables
 ENV PYTHONPATH /code/${env_rel_path}/../python-lib
-ENV CQPARTS_DB sqlite:///:memory:
+ENV CQPARTS_DB sqlite:////code/data.db
 
 # default run command
 CMD bash run.sh
