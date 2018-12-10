@@ -1,23 +1,74 @@
-All of these models are python programs, with inheritance , instancing and parameters.<p> Click on the links to view a 3d rendering. From the model the source code is linked for each design.
-<hr>
-{% for cols in list|sort|batch(4) %}
-<div class="columns ">
-        {% for n in cols %}
-        <div class="column is-one-quarter">
-            <a href="{{n.path}}">
-            <div class="box">
-            {{n.name}}
-            {% if n.image_path %}
-            <figure class="image">
-            <a href="{{n.path}}">
-            <img src="{{n.image_path}}">
-            </a>
-            </figure>
-            {% endif %}
-            </div>
-            </a>
-        </div>
-        {% endfor %}
+<h3 class="subtitle is-3">A Cube</h3>
+<div class="section">
+  <p>The "Hello World" of 3D geometry:</p>
+  <pre><code class="python">
+import cadquery
+import cqparts
+from cqparts.params import PositiveFloat
+
+class Cube(cqparts.Part):
+size = PositiveFloat(1, doc="length along one side")
+
+def make(self):
+  return cadquery.Workplane('XY').box(
+      self.size, self.size, self.size,
+      centered=(True, True, False),
+  )
+
+# Create an instance
+my_cube = Cube(size=10)  # changed size to 10
+
+# Dispaly it
+from cqparts.display import display
+display(my_cube)
+  </code></pre>
+
+  <p>The cqparts <a href="#documentation">documentation</a> has a much more
+  comprehensive set of simple examples to get you started.</p>
 </div>
-{% endfor %}
-<a class="button is-link" href="/examples">Everything Else</a>
+
+<h3 class="subtitle is-3">Parts Library</h3>
+<div class="section">
+  <p>All the models below are python programs just like the cube above.</p>
+  <p>They have the full power of Python and any imported libraries to use when building the geometry.</p>
+  <p>Select any of the following examples for a 3D render of the object, and links to their source code.</p>
+  <hr/>
+  {% for cols in list|sort|batch(4) %}
+  <div class="columns ">
+    {% for n in cols %}
+    <div class="column is-one-quarter">
+      <a href="{{ n.path }}">
+      <div class="box">
+      {{ n.name }}
+      {% if n.image_path %}
+      <figure class="image">
+      <a href="{{ n.path }}">
+      <img src="{{ n.image_path }}">
+      </a>
+      </figure>
+      {% endif %}
+      </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+  <a class="button is-link" href="/examples">Everything Else</a>
+
+  <h3 class="subtitle is-3">Real World</h3>
+  <div class="section">
+    <div class="columns">
+      <div class="column is-one-quarter">
+        <a href="https://github.com/gnhdesign/ct1">
+          <div class="box">
+            Coffee Table
+            <figure class="image">
+              <img src="/static/media/ct1.jpg">
+            </figure>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
