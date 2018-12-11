@@ -6,7 +6,7 @@ import sys, os
 import json
 import yaml
 
-from flask import Flask, jsonify, abort, render_template, request, session
+from flask import Flask, jsonify, abort, render_template, request, session, redirect
 
 import api
 import cache
@@ -39,7 +39,7 @@ def add_header(response):
 def base():
     session["bork"] = True
     return landing.get_landing(app,d,local=False)
-    #return render_template("landing.html", data=front)
+    #return render_template("landing.html", date_fulla=front)
 
 
 @app.route("/list/<path:modelname>")
@@ -60,6 +60,10 @@ def show_model(modelname):
 def rebuild():
     return jsonify(request.form.items())
 
+
+@app.route("/examples/<path:modelname>")
+def example_redirect(modelname):
+    return redirect("/show/"+d.base+"/"+modelname,code=302)
 
 print(app.url_map)
 if __name__ == "__main__":
