@@ -11,8 +11,8 @@ class SessionCollection(SecureCookieSessionInterface):
         self.sessions = {}
         self.store = store
 
-    def open_session(self,app,request):
-        return self.session_class() 
+#    def open_session(self,app,request):
+#        return self.session_class() 
 
     def save_session(self,app,session,response):
         super(SessionCollection,self).save_session(app,session,response)
