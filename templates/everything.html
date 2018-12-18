@@ -1,13 +1,5 @@
-<!doctype html>
-<html>
-   <head>
-    <link rel="stylesheet" href="/static/css/bulma.css">
-   </head>
-  <body style="margin:0;">
-        <div id="info" class="box panel">
-        <h1 class="title is-4">CQparts</h1>
-        <a href="/">Index </a>
-	<hr>
+{% extends "base.html" %}
+{% block body %}
 	{% for cols in list|sort|batch(5) %}
 	<div class="columns ">
 		{% for n in cols %}
@@ -29,5 +21,4 @@
      	</div>
         {% endfor %}
 	</div>
-   </body>
-</html>
+{% endblock %}

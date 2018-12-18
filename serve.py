@@ -44,7 +44,7 @@ def base():
 
 @app.route("/list/<path:modelname>")
 def subcat(modelname):
-    return render_template("list.html", dirs=d.prefix(modelname))
+    return render_template("list.html", dirs=d.prefix(modelname),data={})
 
 @app.route("/show/<path:modelname>", methods=["GET", "POST"])
 def show_model(modelname):
@@ -72,7 +72,7 @@ def example_list():
     for i in l:
         if i.is_leaf == True:
             li.append(i.info())
-    return render_template("everything.html", list=li)
+    return render_template("everything.html", list=li,data={})
 
 print(app.url_map)
 if __name__ == "__main__":

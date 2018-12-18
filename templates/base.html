@@ -6,12 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CQParts , pythonic stuff</title>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-  <!-- Bulma Version 0.7.2-->
   <link rel="stylesheet" href="/static/css/bulma.css" />
+  <link rel="stylesheet" href="/static/css/logo.css" />
   <link rel="stylesheet" href="/static/css/landing.css" />
   <link rel="stylesheet" href="/static/css/materialdesignicons.min.css" />
-  <!-- <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet"> -->
   <script async type="text/javascript" src="/static/js/bulma.js"></script>
 </head>
 <body class="has-navbar-fixed-top">
@@ -19,9 +17,7 @@
   <nav class="navbar is-link is-fixed-top">
 
     <div class="navbar-brand">
-        <a class="navbar-item" href="#home">
-          <span>CQParts</span>
-        </a>
+      <span class="cq-logo">cq</span><span class="cq-logo-plugin cqparts">parts</span>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
         <span></span>
         <span></span>
@@ -29,18 +25,20 @@
       </div>
     </div>
 
+    {% if data.sections %}
     <div id="navbarExampleTransparentExample" class="navbar-menu">
       <div class="navbar-end">
-        {% for key in data.section_order %}
-        <a class="navbar-item" href="#{{key}}">
-          {% if data.sections[key].icon %}
-          <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
-          {% endif %}
-          <span>{{ key |title}} </span>
-        </a>
-        {% endfor %}
+            {% for key in data.section_order %}
+            <a class="navbar-item" href="#{{key}}">
+              {% if data.sections[key].icon %}
+              <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
+              {% endif %}
+              <span>{{ key |title}} </span>
+            </a>
+            {% endfor %}
       </div>
     </div>
+    {% endif %}
   </nav>
   {% block body %}
   {% endblock %}

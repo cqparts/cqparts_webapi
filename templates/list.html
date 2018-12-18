@@ -1,8 +1,5 @@
-<!doctype html>
-<html>
-   <head>
-    <link rel="stylesheet" href="/static/css/bulma.css">
-   </head>
+{% extends "base.html" %}
+{% block body %}
   <body style="margin:0;">
         <div id="info" class="box panel">
         <h1 class="title is-4">{{dirs.name}}</h1>
@@ -39,5 +36,4 @@
      	</div>
         {% endfor %}
 	</div>
-   </body>
-</html>
+{% endblock %}
