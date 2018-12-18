@@ -1,0 +1,16 @@
+{%  extends "base.html" %}
+{% block body %}
+<div class="box panel">
+    <nav class="panel">
+        <p class="panel-heading">Configs</p>
+        {% for i in conf %}
+            {% if i.form == 'bool' %}
+                <div class="panel-block"> bool {{ i.name }}</div>
+            {% elif  i.form == 'int' %}
+                <div class="panel-block"> int {{ i.name }}</div>
+            {% endif  %}
+        {% endfor %}
+    </nav>
+</div>
+{% endblock %}
+
