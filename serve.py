@@ -65,6 +65,15 @@ def rebuild():
 def example_redirect(modelname):
     return redirect("/show/"+d.base+"/"+modelname,code=302)
 
+@app.route("/examples/")
+def example_list():
+    li = []
+    l = d.treeiter("export")
+    for i in l:
+        if i.is_leaf == True:
+            li.append(i.info())
+    return render_template("everything.html", list=li)
+
 print(app.url_map)
 if __name__ == "__main__":
     app.run(threaded=True, host="0.0.0.0", port=8089)
