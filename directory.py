@@ -192,8 +192,8 @@ class Directory:
             item = self.class_dict[key]
             item.params.update(fixes)
             item.rendered = False
-            self.store.upsert(item)
             self.export(item)
+            self.store.upsert(item)
 
     def export(self, t):
         folder_name = self.export_prefix + "/" + self.export_path + "/" + t.name
