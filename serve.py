@@ -7,7 +7,7 @@ import json
 import yaml
 import uuid
 
-from flask import Flask, jsonify, abort, render_template, request, session
+from flask import Flask, jsonify, abort, render_template, request, session, redirect
 
 import api
 import cache
@@ -48,12 +48,12 @@ def build_sess():
 @app.route("/")
 def base():
     return landing.get_landing(app,d,local=False)
-    #return render_template("landing.html", data=front)
+    #return render_template("landing.html", date_fulla=front)
 
 
 @app.route("/list/<path:modelname>")
 def subcat(modelname):
-    return render_template("list.html", dirs=d.prefix(modelname))
+    return render_template("list.html", dirs=d.prefix(modelname),data={})
 
 @app.route("/show/<path:modelname>", methods=["GET", "POST"])
 def show_model(modelname):
@@ -69,6 +69,19 @@ def show_model(modelname):
 def rebuild():
     return jsonify(request.form.items())
 
+
+@app.route("/examples/<path:modelname>")
+def example_redirect(modelname):
+    return redirect("/show/"+d.base+"/"+modelname,code=302)
+
+@app.route("/examples/")
+def example_list():
+    li = []
+    l = d.treeiter("export")
+    for i in l:
+        if i.is_leaf == True:
+            li.append(i.info())
+    return render_template("everything.html", list=li,data={})
 
 print(app.url_map)
 if __name__ == "__main__":

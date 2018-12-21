@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, abort, send_file, request, jsonify
 import os
+from flask import current_app
 
 cachebp = Blueprint("cache", __name__, url_prefix="/cache")
 
@@ -9,6 +10,9 @@ d = ""
 @cachebp.route("/model/<modelname>/<filename>")
 def model(modelname, filename):
     v = d.get_name(modelname)
+    current_app.logger.error(modelname)
+    current_app.logger.error(filename)
+    current_app.logger.error(v.gltf_path)
     if v is None:
         abort(404)
         return

@@ -25,16 +25,17 @@ d = directory.Directory("examples", "export")
 api = cqparts_api()
 # grabthe templating environment
 j = app.jinja_env
-
+# custom menu later
+data = None
 
 # templates
 def make_view(item):
-    html = j.get_template("dump_show.html").render(item=item)
+    html = j.get_template("dump/show.html").render(item=item,data=data)
     return html
 
 
 def make_page(item):
-    html = j.get_template("dump_list.html").render(dirs=item)
+    html = j.get_template("dump/list.html").render(dirs=item,data=data)
     return html
 
 
@@ -43,7 +44,7 @@ def make_intro():
 
 
 def make_index(l):
-    html = j.get_template("dump_index.html").render(list=l)
+    html = j.get_template("dump/index.html").render(list=l,data=data)
     return html
 
 

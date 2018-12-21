@@ -1,28 +1,32 @@
-title: CQParts
+title: cqparts
 headline: Build tangible programmatic designs in python.
-section_order: ['about','examples','install','documentation','develop','webapi']
+section_order: ['about','examples','install','documentation','license','develop','webapi']
 sections:
   about:
-    title: CQparts
-    sub: "What is it?" 
+    navbar: About
+    heading: About
     icon: mdi-information-outline
-  develop:
-    title: Develop CQParts on github
-    sub: We need your help 
-    icon: mdi-github-box
-  documentation:
-    title: Documentation 
-    sub: How to use it 
-    icon: mdi-file-document-box
-  install:
-    title: Get CQParts on your computer 
-    sub: The bits that you need 
-    icon: mdi-cloud-download
   examples:
-    title: Examples of CQParts objects
-    sub: Showcase examples of what CQParts can do
+    navbar: Examples
+    heading: Examples
     icon: mdi-file-document
+  install:
+    navbar: Install
+    heading: Install
+    icon: mdi-cloud-download
+  documentation:
+    navbar: Docs
+    heading: Documentation
+    icon: mdi-file-document-box
+  license:
+    navbar: License
+    heading: License
+    icon: mdi-clipboard-outline
+  develop:
+    navbar: Dev
+    heading: Development
+    icon: mdi-github-box
   webapi:
-    title:  http interface to cqparts.
-    sub: rest interface and html pages 
+    navbar: WebAPI
+    heading: WebAPI
     icon: mdi-cloud-print-outline

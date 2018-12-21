@@ -401,9 +401,9 @@ pre {
   color: #4a4a4a;
   font-size: 0.875em;
   overflow-x: auto;
-  padding: 1.25rem 1.5rem;
   white-space: pre;
   word-wrap: normal;
+  margin-left: 1.5rem;
 }
 
 pre code {
@@ -5102,6 +5102,7 @@ a.tag:hover {
 
 .title.is-2 {
   font-size: 2.5rem;
+  padding-top: 4rem;
 }
 
 .title.is-3 {
@@ -9652,7 +9653,7 @@ label.panel-block:hover {
 }
 
 .section {
-  padding: 3rem 1.5rem;
+  padding: 0rem 3rem 1.5rem 1.5rem;
 }
 
 @media screen and (min-width: 1088px) {

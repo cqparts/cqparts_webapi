@@ -36,7 +36,7 @@ class importotron:
                     print(m.__all__)
             except:
                 print("fail on "+i)
-        
+
 
 mods = [ 'borken' , 'cqparts_bucket' , 'experimental' ]
 
@@ -68,10 +68,10 @@ class Directory:
         for i in keys:
             sub = s[i].copy()
             print(i,sub)
-        
+
     def build_other(self):
         p = thing("lib", parent=self.root)
-        k = self.d.keys()
+        k = list(self.d.keys())
         for i in k:
             self.build_tree(i, p)
 
@@ -129,8 +129,8 @@ class Directory:
             item = self.class_dict[key]
             item.params.update(fixes)
             item.rendered = False
-            self.store.upsert(item)
             self.export(item)
+            self.store.upsert(item)
 
     def export(self, t):
         folder_name = self.export_prefix + "/" + self.export_path + "/" + t.name

@@ -44,7 +44,7 @@ def make_blender(name,cam_loc,tgt_loc):
     #res = (320,240)
     #samples = 90 
     res = (640,480)
-    samples = 500 
+    samples = 10 
     #res = (1024,768)
     #samples = 200
     size_per = 100

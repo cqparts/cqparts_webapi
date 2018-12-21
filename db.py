@@ -119,4 +119,4 @@ class Store:
                     self.things.c.prefix == self.prefix,
                 )
             )
-            conn.execute(upd, built=t.built, name=t.name, jsondata=jsdata)
+            conn.execute(upd, built=t.built, render=t.rendered,name=t.name, jsondata=jsdata)

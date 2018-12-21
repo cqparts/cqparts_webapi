@@ -5,14 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CQParts , pythonic stuff</title>
+  <title>cqparts: pythonic CAD</title>
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+  <!-- code syntax highlighting -->
+  <link rel="stylesheet" href="/static/css/highlight.js/idea.css" />
+  <script type="text/javascript" src="/static/js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
   <!-- Bulma Version 0.7.2-->
   <link rel="stylesheet" href="/static/css/bulma.css" />
   <link rel="stylesheet" href="/static/css/landing.css" />
   <link rel="stylesheet" href="/static/css/materialdesignicons.min.css" />
   <!-- <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet"> -->
   <script async type="text/javascript" src="/static/js/bulma.js"></script>
+
+  <link rel="stylesheet" href="/static/css/logo.css" />
 </head>
 
 <body>
@@ -21,7 +29,7 @@
 
     <div class="navbar-brand">
         <a class="navbar-item" href="#home">
-          <span>CQParts</span>
+          <span class="cq-logo">cq</span><span class="cq-logo-plugin cqparts">parts</span>
         </a>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
         <span></span>
@@ -37,7 +45,7 @@
           {% if data.sections[key].icon %}
           <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
           {% endif %}
-          <span>{{ key |title}} </span>
+          <span>{{ data.sections[key].navbar }}</span>
         </a>
         {% endfor %}
       </div>
@@ -61,11 +69,14 @@
     <!-- Title -->
     <div class="section-heading">
       <h3 class="title is-2">
-      {% if data.sections[key].icon %}
-      <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
-      {% endif %}
-      {{ key|title }}</h3>
+        {% if data.sections[key].icon %}
+        <span class="icon"><i class="mdi {{ data.sections[key].icon }}"></i></span>
+        {% endif %}
+        {{ data.sections[key].heading }}
+      </h3>
+      {% if key in data.sections %}
       <h4 class="subtitle is-6">{{ data.sections[key].sub }}</h4>
+      {% endif %}
       </div>
       <div class="container">
             {{ data.sections[key].data|safe}}

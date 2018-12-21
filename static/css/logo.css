@@ -1,0 +1,45 @@
+/* cqparts logo is literally an expansion on the cadquery logo
+ * A full discussion can be found here: https://github.com/cqparts/cqparts/issues/24
+ */
+
+/* cadquery */
+.cq-logo {
+  display: inline-block;
+  font-family: monospace;
+  font-weight: bold;
+  padding: 0.1em;
+  margin: 0em;
+  border: 0.1em solid #2980b9;
+  border-radius: 0.1em;
+
+  background: #2980b9;
+  color: #ffffff;
+}
+
+.cq-logo.light {
+  color: #2980b9;
+  background: #ffffff;
+}
+
+/* plugins */
+.cq-logo-plugin {
+  display: inline-block;
+  font-family: monospace;
+  font-weight: bold;
+  padding: 0.1em;
+  margin: 0em;
+  border: 0.1em solid;
+  border-radius: 0.1em;
+  color: #ffffff;
+}
+
+/* plugin: cqparts */
+.cq-logo-plugin.cqparts {
+  background: #808080;
+  border-color: #808080;
+}
+
+.cq-logo-plugin.cqparts.light {
+  color: #808080;
+  background: #ffffff;
+}

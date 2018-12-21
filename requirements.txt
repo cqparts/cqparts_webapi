@@ -1,0 +1,13 @@
+pyyaml
+flask
+sqlalchemy
+cadquery
+cqparts
+
+# for cqparts_bucket
+rectpack
+anytree
+
+# colourful debugging
+ipython
+ipdb

@@ -1,2 +1,4 @@
-#!/bin/sh
-CompileDaemon -build 'echo' -command 'python serve.py' -pattern "\.py"
+#!/usr/bin/env bash
+
+# Run serve
+python3 serve.py
