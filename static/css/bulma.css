@@ -360,7 +360,7 @@ code {
   color: #ff3860;
   font-size: 0.875em;
   font-weight: normal;
-  padding: 0.25em 0.5em 0.25em;
+  /* padding: 0.25em 0.5em 0.25em; */
 }
 
 hr {
@@ -9654,6 +9654,10 @@ label.panel-block:hover {
 
 .section {
   padding: 0rem 3rem 1.5rem 1.5rem;
+}
+
+body>.section {
+  padding-bottom: 0px;  /* Already enough padding above headings */
 }
 
 @media screen and (min-width: 1088px) {
