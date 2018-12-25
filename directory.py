@@ -157,6 +157,8 @@ class Directory:
         if t is not None:
             path = os.sep + self.export_prefix + os.sep + "img" + os.sep
             t.image_path = path + imgname
+            t.pending = False
+            t.rendered = True
             self.store.upsert(t)
 
     def fetch(self, t):
@@ -214,5 +216,12 @@ class Directory:
             nodes.append(node)
         return nodes
 
+    def stats(self):
+        j = self.treeiter('export')
+        counter = 0
+        for i in j:
+            if i.is_leaf:
+                counter = counter + 1
+        return { "total":counter } 
 if __name__ == "__main__":
     d = Directory("cqparts","export")

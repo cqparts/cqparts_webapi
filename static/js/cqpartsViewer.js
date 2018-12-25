@@ -30,7 +30,7 @@ function load(name){
         },
         function (xhr){
             console.log(xhr.loaded,xhr.total);
-            progress.value = (xhr.loaded/xhr.total * 100);
+            progress.value = (xhr.loaded/(1+xhr.total * 90));
         } );
     }
 

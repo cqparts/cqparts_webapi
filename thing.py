@@ -31,6 +31,7 @@ class thing(NodeMixin):
         self.image_path = ""
         self.view = {}
         self._hidden = ""
+        self.pending = False 
         self.__dict__.update(kwargs)
 
     def get_path(self):
@@ -54,6 +55,7 @@ class thing(NodeMixin):
             "name": self.name,
             "leaf": self.is_leaf,
             "built": self.built,
+            "rendered": self.rendered,
             "classname": self.classname,
             "params": self.params,
             "doc": self.doc,

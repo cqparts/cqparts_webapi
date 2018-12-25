@@ -1,0 +1,11 @@
+{%  extends "base.html" %}
+{% block body %}
+{% for key in widgets %}
+  <!-- {{ key }}-->
+  <section class="section " id="{{key}}">
+      <div class="container">
+            {{ widgets[key]|safe}}
+      </div>
+  </section>
+{% endfor %}
+{% endblock %}

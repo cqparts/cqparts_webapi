@@ -25,8 +25,34 @@ class Store:
 
         self.thing_table()
         self.session_table()
+        self.sizes_table()
 
         self.metadata.create_all(self.db)
+
+
+    def sizes_table(self):
+        self.rendersizes = Table(
+            "rendersizes",
+            self.metadata,
+            Column("id", Integer, primary_key=True),
+            Column("width", Integer),
+            Column("height", Integer),
+            Column("samples", Integer),
+        )
+
+    def get_sizes(self):
+        conn = self.db.connect()
+        s = select([self.rendersizes])
+        result = conn.execute(s)
+        sizes = []
+        for row in result:
+            sizes.append({
+                "id" : row.id,
+                "width" : row.width,
+                "height" : row.height,
+                "samples" : row.samples,
+            })
+        return sizes
 
     def thing_table(self):
         self.things = Table(
@@ -58,11 +84,13 @@ class Store:
             id= s.uuid,
             name = s.name
         )
+
     def get_session(self,s):
         conn = self.db.connect()
         s = select(self.sessions).where( self.sessions.uuid == str(s.uuid) )
         result = conn.execute(s)
         return result     
+
     def list(self):
         s = select([self.things])
         conn = self.db.connect()
@@ -87,6 +115,7 @@ class Store:
             t.built = data["built"]
             t.view = data["view"]
             t.params = data["params"]
+            t.rendered = data["rendered"]
             t.image_path = data["image_path"]
             t.gltf_path = data["gltf_path"]
 

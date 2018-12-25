@@ -1,0 +1,10 @@
+<nav class="level">
+  {% for i in data %}
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">{{ i }}</p>
+      <p class="title">{{ data[i] }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</nav>

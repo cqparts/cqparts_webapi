@@ -1,0 +1,22 @@
+<div class="section">
+  {% for cols in list|sort|batch(4) %}
+  <div class="columns ">
+    {% for n in cols %}
+    <div class="column is-one-quarter">
+      <a href="{{ n.path }}">
+      <div class="box">
+      {{ n.name }}
+      {% if n.image_path %}
+      <figure class="image">
+      <a href="{{ n.path }}">
+      <img src="{{ n.image_path }}">
+      </a>
+      </figure>
+      {% endif %}
+      </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>

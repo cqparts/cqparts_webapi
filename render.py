@@ -1,4 +1,5 @@
 from flask import Blueprint, Response, abort, send_file, request
+from flask import jsonify
 import os
 
 renderbp = Blueprint("render", __name__)
@@ -10,20 +11,27 @@ event = []
 # the directory
 d = None
 
-
+# send a single render
 @renderbp.route("/render")
 def render():
-    def eventStream():
-        while True:
-            # wait for source data to be available, then push it
-            if len(event) > 0:
-                yield event.pop(0)
-            else:
-                time.sleep(1)
+    l = d.treeiter("export")
+    for i in l:
+        data = i.info()
+        if i.is_leaf == True:
+            if i.built == True:
+                if i.rendered == False:
+                    if i.pending == False:
+                        i.pending = True
+                        return jsonify(data)
+    return jsonify({"queue":"empty"}) 
 
-    return Response(eventStream(), mimetype="text/event-stream")
 
 
+@renderbp.route("/rendersizes")
+def render_sizes():
+    s = d.store.get_sizes()
+    return jsonify(s)
+    
 # get posted image
 @renderbp.route("/image", methods=["POST"])
 def image():

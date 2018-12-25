@@ -1,4 +1,4 @@
 #!/bin/bash
 
-blender --python db_test.py -b
+blender --python web_test.py -b
 

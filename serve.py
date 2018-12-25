@@ -16,6 +16,7 @@ import render
 import directory
 import landing
 import sess
+import widgets
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ d = directory.Directory("examples", "export")
 api.d = d
 render.d = d
 cache.d = d
+widgets.d = d
 
 app.secret_key = os.environ["CQPARTS_SECURE"]
 app.session_interface = sess.SessionCollection(d.store)
@@ -45,10 +47,13 @@ def build_sess():
         session["id"] = uuid.uuid4()
         session.permanent=True
 
+@app.route("/landing")
+def land():
+    return landing.get_landing(app,d,local=False)
+
 @app.route("/")
 def base():
-    return landing.get_landing(app,d,local=False)
-    #return render_template("landing.html", date_fulla=front)
+    return widgets.front(app)
 
 
 @app.route("/list/<path:modelname>")
@@ -73,6 +78,10 @@ def rebuild():
 @app.route("/examples/<path:modelname>")
 def example_redirect(modelname):
     return redirect("/show/"+d.base+"/"+modelname,code=302)
+
+@app.route("/config")
+def actions():
+    return render_template("config.html", data={})
 
 @app.route("/examples/")
 def example_list():
