@@ -1,10 +1,10 @@
 {%  extends "base.html" %}
 {% block body %}
-{% for key in widgets %}
+{% for key in widgets.widget_order %}
   <!-- {{ key }}-->
-  <section class="section " id="{{key}}">
+  <section class="section" id="{{key}}">
       <div class="container">
-            {{ widgets[key]|safe}}
+            {{ widgets.widgets[key]|safe}}
       </div>
   </section>
 {% endfor %}

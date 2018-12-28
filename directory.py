@@ -21,26 +21,9 @@ from anytree.resolver import Resolver
 import views
 import render
 import db
+import importer
 from thing import thing
 
-from importlib import import_module
-
-class importotron:
-    def __init__(self,mods):
-        self.mods = mods
-        for i in self.mods:
-            try:
-                m = import_module(i)
-                print("importing "+i)
-                if hasattr(m,"__all__"):
-                    print(m.__all__)
-            except:
-                print("fail on "+i)
-
-
-mods = [ 'borken' , 'cqparts_bucket' , 'experimental' ]
-
-i = importotron(mods)
 
 class Directory:
     def __init__(self, base, name, prefix="cache", export="model"):
@@ -219,9 +202,15 @@ class Directory:
     def stats(self):
         j = self.treeiter('export')
         counter = 0
+        build_counter = 0
+        render_count = 0 
         for i in j:
             if i.is_leaf:
                 counter = counter + 1
-        return { "total":counter } 
+                if i.built:
+                    build_counter = build_counter + 1
+                if i.rendered:
+                    render_count = render_count + 1
+        return { "total":counter ,"built": build_counter,"rendered":render_count} 
 if __name__ == "__main__":
     d = Directory("cqparts","export")

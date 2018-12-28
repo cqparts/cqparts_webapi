@@ -26,9 +26,19 @@ class Store:
         self.thing_table()
         self.session_table()
         self.sizes_table()
+        self.notes_table()
 
         self.metadata.create_all(self.db)
 
+    def notes_table(self):
+        " storage for notes "
+        self.notes= Table(
+            "notes",
+            self.metadata,
+            Column("id", Integer, primary_key=True),
+            Column("class", String),
+            Column("note", String),
+        )
 
     def sizes_table(self):
         self.rendersizes = Table(

@@ -32,6 +32,7 @@ class thing(NodeMixin):
         self.view = {}
         self._hidden = ""
         self.pending = False 
+        self.notes = []
         self.__dict__.update(kwargs)
 
     def get_path(self):
