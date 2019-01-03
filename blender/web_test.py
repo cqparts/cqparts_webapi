@@ -21,7 +21,7 @@ section = ""
 render_sets = {}
 sess = requests.Session()
 
-def render_this(jdata):
+def render_this(jdata,sizes):
     name = jdata['name']
     print(jdata)
     r = sess.get(target+'/zipped/'+name,stream=True)
@@ -31,18 +31,20 @@ def render_this(jdata):
     except:
         print("BROKEN ZIP :"+folder)
     print(r)
-    make_blender(name,jdata['view']['cam'],jdata['view']['target'])
+    make_blender(name,jdata['view']['cam'],jdata['view']['target'],sizes)
     uploader(name)
 
 # https://github.com/ksons/gltf-blender-importer
-def make_blender(name,cam_loc,tgt_loc):
+def make_blender(name,cam_loc,tgt_loc,sizes, size=3):
     # TODO should pass render sets from the cqpart-server
     # split me into a dictionary
     multiplier =  100
     #res = (320,240)
     #samples = 90 
-    res = (640,480)
-    samples = 4 
+    print(sizes.keys())
+    sz = sizes[size]
+    res = (sz['width'],sz['height'])
+    samples = sz['samples'] 
     #res = (1024,768)
     #samples = 200
     size_per = 100
@@ -131,16 +133,20 @@ class Incoming:
     def __init__(self, prefix="cache"):
         self.sleep = 1
         self.max = 30
-        self.get_sizes()
+        self.sizes = self.get_sizes()
 
     def get_sizes(self):
         try:
             r = sess.get(target+"/rendersizes")
-            print(r.json())
+            data = r.json()
+            sz = {}
+            for i in data:
+                sz[int(i['id'])] = i
+            return sz
         except:
             print("server fail")
             
-    def list(self):
+    def list(self,sizes):
         try:
             r = sess.get(target+"/render")
         except:
@@ -149,19 +155,19 @@ class Incoming:
         if "queue" in jdata:
             return False
         print(jdata)
-        render_this(jdata)
+        render_this(jdata,sizes)
         return True
 
     def run(self):
         while True:
-            cont = i.list()
-            print("Fetching New :"+str(self.sleep))
+            cont = i.list(self.sizes)
             if not cont:
                 if self.sleep < self.max:
                     self.sleep = self.sleep * 2
                 time.sleep(self.sleep)
             else:
                 self.sleep = 1
+            print("Fetching New in "+str(self.sleep)+" seconds")
 
 i = Incoming()
 i.run()

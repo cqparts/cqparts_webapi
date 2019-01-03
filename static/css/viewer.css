@@ -12,6 +12,19 @@
 	left: 5px;
 }
 
+#plugins {
+	display:none;
+	position:absolute;
+        top: 5px;
+        right: 5px;
+}
+
+#plus{
+	position:absolute;
+        top: 5px;
+        right: 5px;
+}
+
 #hide{
 	float:right;
 }

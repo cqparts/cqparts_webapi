@@ -12,3 +12,15 @@ function showHide(){
 	}
 }
 
+function PlugshowHide(){
+	var p  = document.getElementById("plugins");
+	var plus = document.getElementById("plus");
+	if (plus.style.display === "none") {
+		plus.style.display = "block";
+		p.style.display = "none";
+	} else {
+		plus.style.display = "none";
+		p.style.display = "block";
+	}
+}
+

@@ -13,7 +13,7 @@ def stats(app):
 
 def showcase(app):
     sc = []
-    l = d.treeiter("export/showcase")
+    l = d.treeiter("showcase/showcase")
     for i in l:
         if i.is_leaf == True:
             sc.append(i.info())
@@ -21,7 +21,7 @@ def showcase(app):
 
 class front_widgets:
     def __init__(self,app):
-        self.widget_order = ['showcase','links','stats']
+        self.widget_order = ['stats','links','showcase']
         self.widgets = {
             'showcase' : showcase(app),
             'stats' : stats(app),

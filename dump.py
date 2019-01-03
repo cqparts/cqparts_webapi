@@ -101,7 +101,10 @@ def build_pages(l):
             pass
         if i.leaf:
             c = i.get_class()
-            line_number = inspect.getsourcelines(c)[1]
+            try:
+                line_number = inspect.getsourcelines(c)[1]
+            except:
+                print('no source')
             i.github = github + i.classname.split(".")[1] + ".py#L" + str(line_number)
             page = make_view(i)
             f = open(prefix + "/" + i.get_path() + "/index.html", "w")

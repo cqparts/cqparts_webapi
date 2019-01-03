@@ -17,6 +17,7 @@ import directory
 import landing
 import sess
 import widgets
+import plugins
 
 app = Flask(__name__)
 
@@ -67,7 +68,8 @@ def show_model(modelname):
         d.build_part(v)
     app.logger.error("%s", modelname)
     ob = d.params(modelname)
-    return render_template("view.html", item=d.params(modelname))
+    plug = plugins.list()
+    return render_template("view.html", item=d.params(modelname),plug=plug)
 
 
 @app.route("/rebuild", methods=["POST"])

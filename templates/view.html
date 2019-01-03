@@ -7,6 +7,7 @@
 		<script src="/static/js/three.min.js"></script>
 		<script src="/static/js/OrbitControls.js"></script>
 		<script src="/static/js/GLTFLoader.js"></script>
+                <link rel="stylesheet" href="/static/css/materialdesignicons.min.css" />
 	</head>
 	<body style="margin:0; overflow:hidden;">
         <progress id="progress" class="progress is-large is-success ontop" value="0" max="100"></progress>
@@ -18,43 +19,54 @@
                 {% endif %}
                 </div>
 		<div id="info" class="box panel" style="position: absolute">
-			<button id="hide" class="button" onclick="showHide()">Hide</button>
-			<h1 class="title is-4">{{item.name}}</h1>
-			{% if item.parent %}
-			<a href="/list{{ item.parent }}">{{ item.parent }}</a>
-			{% endif %}
-			{% if item.doc%}
-			<div class="message is-small">{{item.doc}}</div>
-			{% endif %}
-			<br>
-			<span class="tag">{{item.classname}}</span>
-			<hr>
-			<form id="paramform" method="post"> </form>
-			<input form="paramform" type="hidden" name="classname" value="{{item.classname}}">
-			<table class="table is-narrow is-hoverable">
-				<thead>
-					<tr>
-						<th>Param</th>
-						<th>Value</th>
-					</tr>
-				</thead>
-				{% for key, value in item.params.items() %}
-				<tr>
-					<td>{{ key }} </td><td> <input form="paramform" type="text" name="{{ key }}" value="{{ value}}"></td>
-				</tr>
-				{% endfor %}
-					<td>Selectors</td><td> <span class="tag is-warning">FIXME Expose Selectors</span> </td>
-			</table>
-			<input class="button" form="paramform" type="submit" value="Submit">
-			<hr>
-			<span class="tag is-warning">FIXME</span><br>
-			Save Variant
-			<br>
-			<input form="paramform" type="checkbox" name="save">
-			<input form="paramform" type="text">
-			<input class="button is-small" form="paramform" type="submit" value="Submit">
-			<br>
-		</div>
+                    <button id="hide" class="button" onclick="showHide()">Hide</button>
+                    <h1 class="title is-4">{{item.name}}</h1>
+                    {% if item.parent %}
+                    <a href="/list{{ item.parent }}">{{ item.parent }}</a>
+                    {% endif %}
+                    {% if item.doc%}
+                    <div class="message is-small">{{item.doc}}</div>
+                    {% endif %}
+                    <br>
+                    <span class="tag">{{item.classname}}</span>
+                    <hr>
+                    <form id="paramform" method="post"> </form>
+                    <input form="paramform" type="hidden" name="classname" value="{{item.classname}}">
+                    <table class="table is-narrow is-hoverable">
+                        <thead>
+                                <tr>
+                                        <th>Param</th>
+                                        <th>Value</th>
+                                </tr>
+                        </thead>
+                        {% for key, value in item.params.items() %}
+                        <tr>
+                                <td>{{ key }} </td><td> <input form="paramform" type="text" name="{{ key }}" value="{{ value}}"></td>
+                        </tr>
+                        {% endfor %}
+                                <td>Selectors</td><td> <span class="tag is-warning">FIXME Expose Selectors</span> </td>
+                    </table>
+                    <input class="button" form="paramform" type="submit" value="Submit">
+                    <hr>
+                    <span class="tag is-warning">FIXME</span><br>
+                    Save Variant
+                    <br>
+                    <input form="paramform" type="checkbox" name="save">
+                    <input form="paramform" type="text">
+                    <input class="button is-small" form="paramform" type="submit" value="Submit">
+                    <br>
+	    	</div>
+                <span id="plus" class="icon is-large"><i onclick="PlugshowHide()" class="mdi mdi-plus-box"></i></span>
+                <div id="plugins" class="box panel" style="position: absolute">
+                    <aside class="menu">
+                    <span id="plus" class="icon is-medium"><i onclick="PlugshowHide()" class="mdi mdi-minus-box"></i></span>
+                    <ul class="menu-list">
+                        {% for key, value in plug.items() %}
+                        <li><a>{{ key }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    </aside>
+                </div>
 		<script src="/static/js/cqpartsViewer.js"></script>
 		<script src="/static/js/app.js"></script>
 		<script>

@@ -16,7 +16,7 @@ class SessionCollection(SecureCookieSessionInterface):
 
     def save_session(self,app,session,response):
         super(SessionCollection,self).save_session(app,session,response)
-        app.logger.error(session['id'])
+        #app.logger.error(session['id'])
 
 
     def get(self,uuid):

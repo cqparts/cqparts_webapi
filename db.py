@@ -109,7 +109,7 @@ class Store:
             print(row)
 
     def fetch(self, t):
-        s = select([self.things.c.jsondata]).where(
+        s = select([self.things.c.jsondata,self.things.c.render]).where(
             and_(
                 self.things.c.classname == t.classname,
                 self.things.c.prefix == self.prefix,
@@ -125,7 +125,7 @@ class Store:
             t.built = data["built"]
             t.view = data["view"]
             t.params = data["params"]
-            t.rendered = data["rendered"]
+            t.rendered = row.render 
             t.image_path = data["image_path"]
             t.gltf_path = data["gltf_path"]
 

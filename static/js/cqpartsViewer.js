@@ -96,6 +96,12 @@ function onKey( event ) {
             meshlist[i].visible = true;
         }
     };
+    if (event.code == "KeyI"){
+        //console.log(event);
+        for ( var i in meshlist){
+            meshlist[i].visible = !meshlist[i].visible;
+        }
+    };
     //console.log(event);
     if (event.code == "Space"){
         if ( INTERSECTED ) {
