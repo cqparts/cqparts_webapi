@@ -56,16 +56,18 @@
                     <input class="button is-small" form="paramform" type="submit" value="Submit">
                     <br>
 	    	</div>
-                <span id="plus" class="icon is-large"><i onclick="PlugshowHide()" class="mdi mdi-plus-box"></i></span>
+                <div>
+                <span id="plus" class="icon "><i onclick="PlugshowHide()" class="mdi mdi-36px  mdi-plus-box"></i></span>
                 <div id="plugins" class="box panel" style="position: absolute">
+                    <span id="plus" class="icon "><i onclick="PlugshowHide()" class="mdi mdi-36px mdi-minus-box"></i></span>
                     <aside class="menu">
-                    <span id="plus" class="icon is-medium"><i onclick="PlugshowHide()" class="mdi mdi-minus-box"></i></span>
                     <ul class="menu-list">
                         {% for key, value in plug.items() %}
                         <li><a>{{ key }}</a></li>
                         {% endfor %}
                     </ul>
                     </aside>
+                </div>
                 </div>
 		<script src="/static/js/cqpartsViewer.js"></script>
 		<script src="/static/js/app.js"></script>

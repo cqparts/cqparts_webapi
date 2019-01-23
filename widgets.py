@@ -13,7 +13,7 @@ def stats(app):
 
 def showcase(app):
     sc = []
-    l = d.treeiter("showcase/showcase")
+    l = d.treeiter("export/showcase")
     for i in l:
         if i.is_leaf == True:
             sc.append(i.info())

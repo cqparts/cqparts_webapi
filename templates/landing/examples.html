@@ -7,13 +7,13 @@ import cqparts
 from cqparts.params import PositiveFloat
 
 class Cube(cqparts.Part):
-size = PositiveFloat(1, doc="length along one side")
+    size = PositiveFloat(1, doc="length along one side")
 
-def make(self):
-  return cadquery.Workplane('XY').box(
-      self.size, self.size, self.size,
-      centered=(True, True, False),
-  )
+    def make(self):
+      return cadquery.Workplane('XY').box(
+          self.size, self.size, self.size,
+          centered=(True, True, False),
+      )
 
 # Create an instance
 my_cube = Cube(size=10)  # changed size to 10
