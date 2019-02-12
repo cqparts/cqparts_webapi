@@ -4,8 +4,8 @@ import sys, os
 sys.path.append("..")
 
 #import cqparts_bucket
-from cqparts_bucket import *
-from experimental.zignig import *
+#from cqparts_bucket import *
+#from experimental.zignig import *
 
 import cqparts.search as cs
 import cqparts
@@ -203,7 +203,7 @@ class Directory:
         j = self.treeiter('export')
         counter = 0
         build_counter = 0
-        render_count = 0 
+        render_count = 0
         for i in j:
             if i.is_leaf:
                 counter = counter + 1
@@ -211,6 +211,7 @@ class Directory:
                     build_counter = build_counter + 1
                 if i.rendered:
                     render_count = render_count + 1
-        return { "total":counter ,"built": build_counter,"rendered":render_count} 
+        return { "total":counter ,"built": build_counter,"rendered":render_count}
+
 if __name__ == "__main__":
     d = Directory("cqparts","export")

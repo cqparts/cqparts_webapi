@@ -18,6 +18,7 @@ import landing
 import sess
 import widgets
 import plugins
+import importer
 
 app = Flask(__name__)
 
@@ -25,6 +26,8 @@ app = Flask(__name__)
 app.register_blueprint(api.bp)
 app.register_blueprint(cache.cachebp)
 app.register_blueprint(render.renderbp)
+
+i = importer.importotron(importer.mods)
 d = directory.Directory("examples", "export")
 api.d = d
 render.d = d
