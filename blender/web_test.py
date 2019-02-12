@@ -78,6 +78,7 @@ def make_blender(name,cam_loc,tgt_loc,sizes, size=3):
     bpy.ops.object.camera_add()
     cam = bpy.context.selected_objects[0]
     bpy.context.scene.camera = cam
+    cam.data.clip_end = 1000000
     cam.location = (-cam_loc['x']*multiplier,cam_loc['z']*multiplier,cam_loc['y']*multiplier)
     # add the track
     bpy.ops.object.constraint_add(type="TRACK_TO")
