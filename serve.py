@@ -69,12 +69,19 @@ def show_model(modelname):
     if request.method == "POST":
         v = request.form.copy()
         d.build_part(v)
-    app.logger.error("%s", modelname)
+    #app.logger.error("%s", modelname)
     ob = d.params(modelname)
     plug = plugins.list()
     return render_template("view.html", item=d.params(modelname),plug=plug)
 
-
+# fixing the position
+@app.route("/pos/<path:modelname>", methods=["GET", "POST"])
+def pos_model(modelname):
+    ob = d.params(modelname)
+    # update the view for development
+    ob['view'] = views.placed(ob['view']['scene'])
+    return render_template("position.html", item=ob,info=ob)
+    
 @app.route("/rebuild", methods=["POST"])
 def rebuild():
     return jsonify(request.form.items())

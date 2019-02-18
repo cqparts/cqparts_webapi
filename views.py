@@ -4,7 +4,7 @@ import math
 
 # ewwork of
 # scene size is [[x1,y1,z1],[x2,y2,z2]
-def placed(scene_size, fudge=1.4, fov=30.0, rescale=1000.0):
+def placed(scene_size, fudge=1, fov=30.0, rescale=500.0):
     # camera location & target
     cnt = centroid(scene_size, rescale)
     cam_t = cnt  # [0,0,cnt[2]]
@@ -23,10 +23,11 @@ def placed(scene_size, fudge=1.4, fov=30.0, rescale=1000.0):
     data["camera_pos"] = ",".join("%g" % (val) for val in xzy(cam_p))
     # weird threejs cooreds
     # cam_p[1] = -cam_p[1]
-    data["cam"] = xyz(cam_p)
-    data["target"] = xyz(cam_t)
+    data["cam"] = xzy(cam_p)
+    data["target"] = xzy(cam_t)
     data["distance"] = distance
     data["sphere"] = sphere(scene_size)
+    data["scene"] = scene_size
     return data
 
 
@@ -36,7 +37,7 @@ def xyz(pos):
 
 def centroid(scene_size, rescale):
     x = (scene_size[1][0] + scene_size[0][0]) / 2.0
-    y = (scene_size[1][1] + scene_size[0][2]) / 2.0
+    y = (scene_size[1][1] + scene_size[0][1]) / 2.0
     z = (scene_size[1][2] + scene_size[0][2]) / 2.0
     return [x / rescale, y / rescale, z / rescale]
 

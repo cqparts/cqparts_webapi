@@ -10,9 +10,9 @@ d = ""
 @cachebp.route("/model/<modelname>/<filename>")
 def model(modelname, filename):
     v = d.get_name(modelname)
-    current_app.logger.error(modelname)
-    current_app.logger.error(filename)
-    current_app.logger.error(v.gltf_path)
+    #current_app.logger.error(modelname)
+    #current_app.logger.error(filename)
+    #current_app.logger.error(v.gltf_path)
     if v is None:
         abort(404)
         return
