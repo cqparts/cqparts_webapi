@@ -17,7 +17,8 @@ def model(modelname, filename):
         abort(404)
         return
     if v.gltf_path == "":
-        return jsonify(v.info())
+        abort(404)
+        return
     path = v.gltf_path[1:] + "/" + filename
     return send_file(path)
 
