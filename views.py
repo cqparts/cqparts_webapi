@@ -2,20 +2,26 @@
 
 import math
 
-# ewwork of
+# reference https://cubehero.com/2013/05/15/how-to-automatically-choose-a-camera-viewing-angle-of-any-3d-model/
+
+# rework of
 # scene size is [[x1,y1,z1],[x2,y2,z2]
-def placed(scene_size, fudge=1, fov=30.0, rescale=400.0):
+def placed(scene_size,tweak=0.9 , fov=30.0, rescale=520.0):
     # camera location & target
-    cam_t = centroid(scene_size, rescale)
-    # calculate fov distance
-    distance = -fudge * (sphere(scene_size) / math.sin(fov / (2 * math.pi)))
+    cam_t = centroid(scene_size,rescale)
     # rotate the point but angles
-    cam_p = rot(distance / rescale, -25, 25)
-    #cam_p = rot(distance / rescale, 20, 33)
+    l , w , h = lwh(scene_size)
+    # polar coordinates
+    phi = -(math.pi/3.0) * math.exp(-h/((l+w)))
+    theta = (math.pi/2.0) * math.exp(-l/w)
+    fovr = math.atan(math.radians(fov))
+    radius = max([w/fovr,l/fovr,h/fovr])*tweak
+ 
+    cam_p = rot(radius,phi,theta)
     # offset by target move
-    cam_p[0] = cam_p[0] + cam_t[0]
-    cam_p[1] = cam_p[1] + cam_t[1]
-    cam_p[2] = cam_p[2] + cam_t[2]
+    cam_p[0] = (cam_p[0] + cam_t[0])/rescale
+    cam_p[1] = (cam_p[1] + cam_t[1])/rescale
+    cam_p[2] = (cam_p[2] - cam_t[2])/rescale
     # write
     data = {}
     xzy = lambda a: (a[0], a[2], a[1])  # x,z,y coordinates (not x,y,z)
@@ -25,15 +31,22 @@ def placed(scene_size, fudge=1, fov=30.0, rescale=400.0):
     # cam_p[1] = -cam_p[1]
     data["cam"] = xyz(cam_p)
     data["target"] = xyz(cam_t)
-    data["distance"] = distance
     data["sphere"] = sphere(scene_size)
     data["scene"] = scene_size
+    data["lwh"] = [l,w,h]
+    data["ptr"] = [ phi,theta,radius ]
     return data
 
 
 def xyz(pos):
     return {"x": pos[0], "y": pos[1], "z": pos[2]}
 
+
+def lwh(scene_size):
+    l = abs(scene_size[0][0] - scene_size[1][0]) 
+    w = abs(scene_size[0][1] - scene_size[1][1])
+    h = abs(scene_size[0][2] - scene_size[1][2])
+    return [l,w,h]
 
 def centroid(scene_size, rescale):
     x = (scene_size[1][0] + scene_size[0][0]) / 4.0
@@ -66,10 +79,8 @@ def hypot(a, b):
 
 
 # rotate point around the  origin
-def rot(d, alpha, beta):
-    a = alpha / (2 * math.pi)
-    b = beta / (2 * math.pi)
-    x = d * math.cos(a) * math.cos(b)
-    y = d * math.cos(a) * math.sin(b)
-    z = d * math.sin(a)
+def rot(radius,theta,phi):
+    x = radius * math.sin(theta) * math.cos(phi)
+    y = radius * math.sin(theta) * math.sin(phi)
+    z = radius * math.cos(theta)
     return [x, y, z]

@@ -7,6 +7,8 @@ renderbp = Blueprint("render", __name__)
 
 import json, time
 
+import views
+
 event = []
 # the directory
 d = None
@@ -22,6 +24,8 @@ def render():
                 if i.rendered == False:
                     if i.pending == False:
                         i.pending = True
+                        # update the view for now
+                        data['view'] = views.placed(data['view']['scene'])
                         return jsonify(data)
     return jsonify({"queue":"empty"}) 
 
