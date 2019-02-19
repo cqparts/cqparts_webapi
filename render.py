@@ -42,6 +42,10 @@ def image():
         abort(403)
         return
     export_path = d.export_prefix + os.sep + "img" + os.sep
+    try:
+        os.makedir(export_path)
+    except:    
+        pass
     data.save(export_path + data.filename)
     d.set_image(data.filename)
     return "OK"

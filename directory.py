@@ -125,14 +125,15 @@ class Directory:
             os.makedirs(folder_name)
         except:
             pass
+        # create the object
         o = t.c(**t.params)
         gltf_path = folder_name + "/out.gltf"
         r = o.exporter("gltf")
+        # build the gltf
         v = r(gltf_path)
         view = [r.scene_min, r.scene_max]
         t.view = views.placed(view)
         t.gltf_path = "/" + self.export_prefix + "/" + self.export_path + "/" + t.name
-        # t.render(render.event)
 
     def set_image(self, imgname):
         name = imgname.split(".")[0]

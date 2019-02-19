@@ -4,14 +4,14 @@ import math
 
 # ewwork of
 # scene size is [[x1,y1,z1],[x2,y2,z2]
-def placed(scene_size, fudge=1, fov=30.0, rescale=500.0):
+def placed(scene_size, fudge=1, fov=30.0, rescale=400.0):
     # camera location & target
-    cnt = centroid(scene_size, rescale)
-    cam_t = cnt  # [0,0,cnt[2]]
+    cam_t = centroid(scene_size, rescale)
     # calculate fov distance
     distance = -fudge * (sphere(scene_size) / math.sin(fov / (2 * math.pi)))
     # rotate the point but angles
-    cam_p = rot(distance / rescale, 45, 45)
+    cam_p = rot(distance / rescale, -25, 25)
+    #cam_p = rot(distance / rescale, 20, 33)
     # offset by target move
     cam_p[0] = cam_p[0] + cam_t[0]
     cam_p[1] = cam_p[1] + cam_t[1]
@@ -23,8 +23,8 @@ def placed(scene_size, fudge=1, fov=30.0, rescale=500.0):
     data["camera_pos"] = ",".join("%g" % (val) for val in xzy(cam_p))
     # weird threejs cooreds
     # cam_p[1] = -cam_p[1]
-    data["cam"] = xzy(cam_p)
-    data["target"] = xzy(cam_t)
+    data["cam"] = xyz(cam_p)
+    data["target"] = xyz(cam_t)
     data["distance"] = distance
     data["sphere"] = sphere(scene_size)
     data["scene"] = scene_size
@@ -36,9 +36,9 @@ def xyz(pos):
 
 
 def centroid(scene_size, rescale):
-    x = (scene_size[1][0] + scene_size[0][0]) / 2.0
-    y = (scene_size[1][1] + scene_size[0][1]) / 2.0
-    z = (scene_size[1][2] + scene_size[0][2]) / 2.0
+    x = (scene_size[1][0] + scene_size[0][0]) / 4.0
+    y = (scene_size[1][1] + scene_size[0][1]) / 4.0
+    z = (scene_size[1][2] + scene_size[0][2]) / 4.0
     return [x / rescale, y / rescale, z / rescale]
 
 
