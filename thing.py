@@ -4,8 +4,6 @@ import sys, os
 sys.path.append("..")
 
 #import cqparts_bucket
-from cqparts_bucket import *
-from experimental.zignig import *
 
 import cqparts.search as cs
 import cqparts

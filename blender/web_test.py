@@ -1,7 +1,4 @@
 
-from sqlalchemy import *
-from sqlalchemy.sql import and_, or_, not_
-
 # from directory import thing
 import json
 import os
@@ -74,12 +71,13 @@ def make_blender(name,cam_loc,tgt_loc,sizes, size=3):
     theScene.render.resolution_x = res[0]
     theScene.render.resolution_y = res[1]
     theScene.render.resolution_percentage = size_per
+    #theScene.render.use_freestyle = True
     # make and bind the camera
     bpy.ops.object.camera_add()
     cam = bpy.context.selected_objects[0]
     bpy.context.scene.camera = cam
     cam.data.clip_end = 1000000
-    cam.location = (-cam_loc['x']*multiplier,cam_loc['z']*multiplier,cam_loc['y']*multiplier)
+    cam.location = (-cam_loc['x']*multiplier,cam_loc['y']*multiplier,cam_loc['z']*multiplier)
     # add the track
     bpy.ops.object.constraint_add(type="TRACK_TO")
 
@@ -87,7 +85,7 @@ def make_blender(name,cam_loc,tgt_loc,sizes, size=3):
     bpy.ops.object.empty_add(type='SPHERE')
     tgt  = bpy.context.selected_objects[0]
     tgt.name = "cam_target"
-    tgt.location = (-tgt_loc['x']*multiplier,tgt_loc['z']*multiplier,tgt_loc['y']*multiplier)
+    tgt.location = (-tgt_loc['x']*multiplier,tgt_loc['y']*multiplier,tgt_loc['z']*multiplier)
     # select the camers
     track = cam.constraints["Track To"]
     track.target = bpy.data.objects['cam_target']

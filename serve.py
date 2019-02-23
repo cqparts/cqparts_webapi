@@ -82,9 +82,10 @@ def pos_model(modelname):
     ob['view'] = views.placed(ob['view']['scene'])
     return render_template("position.html", item=ob,info=ob)
     
-@app.route("/rebuild", methods=["POST"])
-def rebuild():
-    return jsonify(request.form.items())
+@app.route("/rerender")
+def rerender():
+    d.rerender()
+    return redirect("/examples",code=302)
 
 
 @app.route("/examples/<path:modelname>")
