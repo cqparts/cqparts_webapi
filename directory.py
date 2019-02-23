@@ -200,6 +200,12 @@ class Directory:
             nodes.append(node)
         return nodes
 
+    def rerender(self):
+        j = self.treeiter('export')
+        for i in j:
+            if i.is_leaf:
+                i.rendered = False
+
     def stats(self):
         j = self.treeiter('export')
         counter = 0
