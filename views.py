@@ -13,15 +13,18 @@ def placed(scene_size,tweak=0.9 , fov=30.0, rescale=520.0):
     l , w , h = lwh(scene_size)
     # polar coordinates
     phi = -(math.pi/3.0) * math.exp(-h/((l+w)))
-    theta = (math.pi/2.0) * math.exp(-l/w)
-    fovr = math.atan(math.radians(fov))
-    radius = max([w/fovr,l/fovr,h/fovr])*tweak
+    theta = (math.pi) + (math.pi/2.0) * math.exp(-w/l)
+    #theta = 0 
+    #phi = math.pi/2.0
+    fovr = math.atan(math.radians(1.5*fov))*tweak
+    radius = max([w/fovr,l/fovr,h/fovr])
  
     cam_p = rot(radius,phi,theta)
     # offset by target move
-    cam_p[0] = (cam_p[0] + cam_t[0])/rescale
-    cam_p[1] = (cam_p[1] + cam_t[1])/rescale
-    cam_p[2] = (cam_p[2] - cam_t[2])/rescale
+    cam_p[0] = (cam_p[0])/ rescale  + cam_t[0]
+    cam_p[1] = (cam_p[1])/rescale  + cam_t[1]
+    cam_p[2] = (cam_p[2])/rescale  + 3*cam_t[2]
+
     # write
     data = {}
     xzy = lambda a: (a[0], a[2], a[1])  # x,z,y coordinates (not x,y,z)
