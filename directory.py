@@ -3,8 +3,8 @@ import sys, os
 
 sys.path.append("..")
 
-#import cqparts_bucket
-#from cqparts_bucket import *
+import cqparts_bucket
+from cqparts_bucket import *
 #from experimental.zignig import *
 
 import cqparts.search as cs
@@ -29,6 +29,7 @@ class Directory:
     def __init__(self, base, name, prefix="cache", export="model"):
         self.name = name
         self.d = cs.index.copy()
+        print(self.d)
         self.res = Resolver("name")
         self.base = base
         self.class_dict = {}
@@ -59,11 +60,13 @@ class Directory:
             self.build_tree(i, p)
 
     def build_tree(self, name, root):
+        print(name,root)
         if name not in self.d:
             return
         p = thing(name, parent=root)
         tr = self.d.pop(name)
         for j in tr:
+            print(j)
             b = thing(j, parent=p)
             for k in tr[j]:
                 cn = type(k()).__module__ + "." + k.__name__
@@ -221,4 +224,4 @@ class Directory:
         return { "total":counter ,"built": build_counter,"rendered":render_count}
 
 if __name__ == "__main__":
-    d = Directory("cqparts","export")
+    d = Directory("examples","export")

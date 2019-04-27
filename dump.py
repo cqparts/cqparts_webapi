@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python2
 " dump the entire directory to a folder"
 
 # don't run the application but use the templates
@@ -17,7 +17,7 @@ import landing
 
 
 
-prefix = "/opt/cqparts.github.io/"
+prefix = "/tmp/hugo"
 #prefix = "dump"
 github = "http://github.com/zignig/cqparts_bucket/blob/master/"
 app = Flask(__name__)
@@ -33,6 +33,9 @@ def make_view(item):
     html = j.get_template("dump/show.html").render(item=item,data=data)
     return html
 
+def make_md(item):
+    html = j.get_template("dump/hugo_export.md").render(item=item,data=data)
+    return html
 
 def make_page(item):
     html = j.get_template("dump/list.html").render(dirs=item,data=data)
@@ -106,7 +109,7 @@ def build_pages(l):
             except:
                 print('no source')
             i.github = github + i.classname.split(".")[1] + ".py#L" + str(line_number)
-            page = make_view(i)
+            page = make_md(i)
             f = open(prefix + "/" + i.get_path() + "/index.html", "w")
             f.write(page)
             f.close()

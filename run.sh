@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 # Run serve
-python3 serve.py
+python2 serve.py
