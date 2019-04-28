@@ -1,6 +1,5 @@
 # Byte-compiled / optimized / DLL files
 *.db
-dump/
 cache/
 static/zip
 __pycache__/

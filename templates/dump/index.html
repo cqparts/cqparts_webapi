@@ -1,0 +1,27 @@
+{% extends "dump/base.html" %}
+{% block body %}
+        <div id="info" class="box panel">
+        <h1 class="title is-4">CQparts</h1>
+        <a href="/">Index </a>
+	<hr>
+	{% for cols in list|sort|batch(5) %}
+	<div class="columns ">
+		{% for n in cols %}
+		<div class="column is-one-fifth">
+                    <a href="{{n.path}}">
+                    <div class="box">
+                    {{n.name}}
+                    {% if n.image_path %}
+                    <figure class="image">
+                    <a href="{{n.path}}">
+                    <img src="{{n.image_path}}">
+                    </a>
+                    </figure>
+                    {% endif %}
+                    </div>
+                    </a>
+		</div>
+		{% endfor %}
+     	</div>
+        {% endfor %}
+{% endblock %}
