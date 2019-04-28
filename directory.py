@@ -29,7 +29,6 @@ class Directory:
     def __init__(self, base, name, prefix="cache", export="model"):
         self.name = name
         self.d = cs.index.copy()
-        print(self.d)
         self.res = Resolver("name")
         self.base = base
         self.class_dict = {}
@@ -46,7 +45,6 @@ class Directory:
 
     def alter_build(self,name):
         reg = cs.index.copy()
-        print("this is a test")
         s = reg[name]
         keys = s.keys()
         for i in keys:
@@ -66,7 +64,6 @@ class Directory:
         p = thing(name, parent=root)
         tr = self.d.pop(name)
         for j in tr:
-            print(j)
             b = thing(j, parent=p)
             for k in tr[j]:
                 cn = type(k()).__module__ + "." + k.__name__

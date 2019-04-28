@@ -11,6 +11,7 @@ import yaml
 import requests, json
 import distutils.dir_util
 
+import datetime
 from client_api import cqparts_api
 import directory
 import landing
@@ -32,6 +33,15 @@ data = None
 def make_view(item):
     html = j.get_template("dump/show.html").render(item=item,data=data)
     return html
+
+class tz(datetime.tzinfo):
+    def __init__(self):
+        self.stdoffset = datetime.timedelta(hours=8)
+    def utcoffset(self,dt):
+        return datetime.timedelta(hours=8)
+    def dst(self, dt):
+        # a fixed-offset class:  doesn't account for DST
+        return datetime.timedelta(0)
 
 def make_md(item):
     html = j.get_template("dump/hugo_export.md").render(item=item,data=data)
@@ -67,7 +77,7 @@ def img_files():
     dir_copy("./cache/img", prefix + os.sep + "img")
 
 
-def build():
+def build(f,prefix):
     unbuilt = api.unbuilt()
     for i in unbuilt:
         path = i["path"]
@@ -78,7 +88,20 @@ def build():
     img_files()
     # build the pages
     built = api.all()
-    build_pages(built)
+    f(built,prefix)
+
+def hugo(prefix):
+    unbuilt = api.unbuilt()
+    for i in unbuilt:
+        path = i["path"]
+        api.show(path)
+    # copy files into place
+    static_files()
+    model_files()
+    img_files()
+    # build the pages
+    built = api.all()
+    hugo_pages(built,prefix)
 
 
 # fake wrapper class
@@ -94,7 +117,7 @@ class meta_thing:
         return cl.c
 
 
-def build_pages(l):
+def hugo_pages(l,prefix):
     file_list = []
     for j in l:
         i = meta_thing(**j)
@@ -103,13 +126,44 @@ def build_pages(l):
         except:
             pass
         if i.leaf:
+            if hasattr(i,'name'):
+                fp = prefix + os.sep + i.get_path() + os.sep
+                sc = inspect.getsourcefile(i.get_class())
+                st = os.stat(sc)
+                ts = st.st_mtime
+                c = datetime.datetime.utcfromtimestamp(ts)
+                i.date = c  
+                i.image_path = "./cache/img/" + i.name + ".png"
+                distutils.file_util.copy_file('./cache/img/'+i.name+".png",fp + i.name + '.png')
+                page = make_md(i)
+                f = open(fp + "index.md", "w")
+                f.write(page)
+                f.close()
+                # fix image path
+                file_list.append(i)
+            else:
+                print(">>"+j)
+        else:
+            print(i,j)
+        
+
+def build_pages(l,prefix):
+    file_list = []
+    for j in l:
+        i = meta_thing(**j)
+        try:
+            os.makedirs(prefix + i.get_path())
+        except:
+            pass
+        if i.leaf:
+            print(i.name)
             c = i.get_class()
             try:
                 line_number = inspect.getsourcelines(c)[1]
             except:
                 print('no source')
             i.github = github + i.classname.split(".")[1] + ".py#L" + str(line_number)
-            page = make_md(i)
+            page = make_page(i)
             f = open(prefix + "/" + i.get_path() + "/index.html", "w")
             f.write(page)
             f.close()
@@ -136,5 +190,6 @@ def build_pages(l):
     f.write(index)
     f.close()
 
-
-build()
+if __name__ == "__main__":
+    #build(build_pages,"/opt/cqparts.github.io")
+    build(hugo_pages,"/opt/website/content/thing")
