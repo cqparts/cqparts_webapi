@@ -11,7 +11,7 @@ channel = connection.channel()
 
 
 def callback(ch, method, properties, body):
-    time.sleep(0.01)
+    #time.sleep(0.01)
     #print(ch,method,properties,body)
     channel.basic_ack(method.delivery_tag)
 

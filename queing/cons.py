@@ -13,7 +13,7 @@ def callback(ch, method, properties, body):
     print(method.routing_key)
     print(method.exchange)
     key = method.routing_key
-    ch.queue_declare(queue=key,auto_delete=True,arguments={'x-message-ttl':360000,'x-dead-letter-exchange':'dead-letter'})
+    ch.queue_declare(queue=key,auto_delete=False,arguments={'x-message-ttl':360000,'x-dead-letter-exchange':'dead-letter'})
     #ch.queue_declare(queue=key,auto_delete=True)
     ch.queue_bind(queue=key,exchange=method.exchange,routing_key=key)
     ch.basic_publish(exchange=method.exchange,routing_key=key,body=body)

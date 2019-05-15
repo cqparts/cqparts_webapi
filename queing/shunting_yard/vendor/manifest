@@ -1,0 +1,11 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/streadway/amqp",
+			"repository": "https://github.com/streadway/amqp",
+			"revision": "75d898a42a940fbc854dfd1a4199eabdc00cf024",
+			"branch": "master"
+		}
+	]
+}
