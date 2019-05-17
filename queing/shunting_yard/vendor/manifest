@@ -2,9 +2,28 @@
 	"version": 0,
 	"dependencies": [
 		{
+			"importpath": "github.com/fsnotify/fsnotify",
+			"repository": "https://github.com/fsnotify/fsnotify",
+			"revision": "1485a34d5d5723fea214f5710708e19a831720e4",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/streadway/amqp",
 			"repository": "https://github.com/streadway/amqp",
 			"revision": "75d898a42a940fbc854dfd1a4199eabdc00cf024",
+			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/sys/unix",
+			"repository": "https://go.googlesource.com/sys",
+			"revision": "61b9204099cb1bebc803c9ffb9b2d3acd9d457d9",
+			"branch": "master",
+			"path": "/unix"
+		},
+		{
+			"importpath": "gopkg.in/yaml.v2",
+			"repository": "https://gopkg.in/yaml.v2",
+			"revision": "51d6538a90f86fe93ac480b35f37b2be17fef232",
 			"branch": "master"
 		}
 	]
